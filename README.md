@@ -15,6 +15,10 @@ Available at [Unity](./Unity/README.md).
 ### Godot SDK
 Available at [Godot](./Godot/README.md).
 
+### Community maintained SDKs
+
+- [Rust SDK](https://github.com/chayleaf/rust-neuro-sama-game-api)
+
 ### Randy
 Randy is a simple bot that mimics the Neuro API. It makes random actions and can be used to test your game. Available at [Randy](./Randy/README.md).
 
