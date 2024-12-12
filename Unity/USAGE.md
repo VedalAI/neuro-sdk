@@ -20,6 +20,21 @@ In order to pass state or context between the `Validate` and `ExecuteAsync` meth
 
 The `ExecuteAsync` method should fully perform what Neuro requested. By this point, the action result has already been sent, so you need to try your best to execute it. If it's not possible anymore, you need to fail silently.
 
+```mermaid
+sequenceDiagram
+participant Neuro
+participant Client as Client(IncomingMessageHandler)
+box Grey NeuroAction Class - YOUR IMPLEMENTATION
+participant Validate
+participant ExecuteAsync
+end
+Neuro ->> Client: Action (Neuro chose a registered action to perform)
+Client ->> Validate: Validate Action (validate the data json)
+Validate ->> Client: return ExecutionResult Success/Failure, out parsedData (optional data)
+Client ->> Neuro: Send ActionResult to Neuro (with ExecutionResult)
+Client ->> ExecuteAsync : Perform Action (with parsedData from Validate)
+```
+
 ### Code Sample
 
 ```cs
