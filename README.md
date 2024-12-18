@@ -31,6 +31,7 @@ Third-party SDKs created and maintained by the community.
 - [JavaScript/TypeScript SDK](https://github.com/AriesAlex/typescript-neuro-game-sdk)
 - [Java SDK](https://github.com/alexcrea/jacn-sdk)
 - [Lua SDK](https://github.com/Gunoshozo/lua-neuro-sama-game-api)
+- [Gamemaker SDK](https://github.com/noellepunk/Neuro-Gamemaker-SDK)
 
 ### Tools
 - [Neuro API Human Control](https://github.com/Pasu4/neuro-api-human-control) is a graphical testing interface, similar to Randy, but it allows the user to write messages manually.
