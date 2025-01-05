@@ -6,7 +6,7 @@
 
 ## What it does
 - First, it downloads static-web-server if it are not already present.
-- It writes the environment variable NEURO_SDK_WS_URL, if it exists, to a file `/$ENV/NEURO_SDK_WS_URL` relative to the game directory.
+- It writes the environment variable NEURO_SDK_WS_URL, if it exists, to a file `/$env/NEURO_SDK_WS_URL` relative to the game directory.
 - It uses static-web-server to serve the files for the selected game on localhost:8787.
 - The game can then be played safely from localhost:8787 in the browser.
 
