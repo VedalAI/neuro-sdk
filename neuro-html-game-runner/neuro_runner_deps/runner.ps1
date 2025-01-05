@@ -103,8 +103,8 @@ Write-Host
 if (Test-Path env:NEURO_SDK_WS_URL) {
     Write-Host "NEURO_SDK_WS_URL = $env:NEURO_SDK_WS_URL"
     Write-Host "Writing to game directory..."
-    New-Item -ItemType Directory -Force -Path "$selectedFolder\`$ENV\"
-    $env:NEURO_SDK_WS_URL | Out-File -FilePath "$selectedFolder\`$ENV\NEURO_SDK_WS_URL"
+    New-Item -ItemType Directory -Force -Path "$selectedFolder\`$env\"
+    $env:NEURO_SDK_WS_URL | Out-File -FilePath "$selectedFolder\`$env\NEURO_SDK_WS_URL"
 } else {
    Write-Host "NEURO_SDK_WS_URL environment variable is not set."
 }
