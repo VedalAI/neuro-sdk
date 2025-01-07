@@ -13,7 +13,7 @@ set "sdkUrl=https://github.com/VedalAI/neuro-game-sdk/archive/refs/tags/1.0.0.zi
 set "sdkDir=neuro-game-sdk-1.0.0"
 set "depsDir=neuro-html-game-runner\neuro_runner_deps"
 set "scriptfile=%~dp0\neuro_runner_deps\runner.ps1"
-set "runnerSHA256=03869f59432e5360f516120c58c0ef48f999802cfd73420cd373e73c540270f7"
+set "runnerSHA256=599b71d1286a8b6e94871f7460779e49dc11f31ccfa37f90e9fac85f84b2c884"
 
 :: Check if the sdk release folder exists
 if not exist "%scriptfile%" (

@@ -109,6 +109,18 @@ if (Test-Path env:NEURO_SDK_WS_URL) {
    Write-Host "NEURO_SDK_WS_URL environment variable is not set."
 }
 
+$config = @"
+[advanced]
+[[advanced.headers]]
+source = "**/*.{gz}"
+headers.Content-Encoding = "gzip"
+[[advanced.headers]]
+source = "**/*.{br}"
+headers.Content-Encoding = "br"
+"@
+
+Set-Content -Path "neuro_runner_deps\server_config.toml" -Value $config
+
 # Start the server
 Write-Host
 Write-Host "[PLACEHOLDER] Starting local server..." -ForegroundColor Yellow
@@ -117,6 +129,6 @@ Write-Host "Game will be running at http://localhost:$port/$selectedFile (Ctrl+C
 # Attempt to open the browser automatically
 Start-Process "http://localhost:$port/$selectedFile"
 
-& $exePath "--port", $port, "--root", $selectedFolder
+& $exePath "--port", $port, "--root", $selectedFolder, "-w", "neuro_runner_deps\server_config.toml"
 
 
