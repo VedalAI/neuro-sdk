@@ -11,7 +11,7 @@ func _init(message: String, silent: bool = false):
 func _get_command() -> String:
 	return "context"
 
-func _get_data() -> Dictionary:
+func _get_data():
 	return {
 		"message": _message,
 		"silent": _silent

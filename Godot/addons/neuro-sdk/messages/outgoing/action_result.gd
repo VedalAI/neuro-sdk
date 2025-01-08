@@ -1,4 +1,4 @@
-﻿class_name ActionResult
+class_name ActionResult
 extends OutgoingMessage
 
 var _id: String
@@ -13,7 +13,7 @@ func _init(id: String, result: ExecutionResult):
 func _get_command() -> String:
 	return "action/result"
 
-func _get_data() -> Dictionary:
+func _get_data():
 	return {
 		"id": _id,
 		"success": _success,

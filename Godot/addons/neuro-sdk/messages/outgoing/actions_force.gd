@@ -15,7 +15,7 @@ func _init(query: String, state, ephemeral_context: bool, action_names: Array[St
 func _get_command() -> String:
 	return "actions/force"
 
-func _get_data() -> Dictionary:
+func _get_data():
 	return {
 		"state": _state,
 		"query": _query,

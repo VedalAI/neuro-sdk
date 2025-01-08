@@ -9,7 +9,7 @@ func _init(actions: Array[WsAction]):
 func _get_command() -> String:
 	return "actions/unregister"
 
-func _get_data() -> Dictionary:
+func _get_data():
 	return {
 		"action_names": _names
 	}
