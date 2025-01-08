@@ -112,6 +112,14 @@ if (Test-Path env:NEURO_SDK_WS_URL) {
 $config = @"
 [advanced]
 [[advanced.headers]]
+source = "**/*"
+headers.Cross-Origin-Opener-Policy = "same-origin"
+headers.Access-Control-Allow-Methods = "GET, POST, OPTIONS"
+headers.Access-Control-Allow-Headers = "Content-Type"
+headers.Cache-Control = "no-cache, no-store, must-revalidate"
+headers.Pragma = "no-cache"
+headers.Expires = "0"
+[[advanced.headers]]
 source = "**/*.{gz}"
 headers.Content-Encoding = "gzip"
 [[advanced.headers]]

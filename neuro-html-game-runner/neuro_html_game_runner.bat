@@ -1,6 +1,6 @@
 @echo off
 :: See https://github.com/VedalAI/neuro-game-sdk/neuro-html-game-runner/README.md for more information about this script.
-set "port=8787"
+set "port=7272"
 
 :: This script uses https://github.com/static-web-server/static-web-server to serve webfiles on localhost.
 :: Please choose the correct distribution for your OS and architecture.
@@ -13,7 +13,7 @@ set "sdkUrl=https://github.com/VedalAI/neuro-game-sdk/archive/refs/tags/1.0.0.zi
 set "sdkDir=neuro-game-sdk-1.0.0"
 set "depsDir=neuro-html-game-runner\neuro_runner_deps"
 set "scriptfile=%~dp0\neuro_runner_deps\runner.ps1"
-set "runnerSHA256=599b71d1286a8b6e94871f7460779e49dc11f31ccfa37f90e9fac85f84b2c884"
+set "runnerSHA256=995a1cbed14aa76ecd051cf4b0a218481538fb4b191dd68b8c72f9fa0a1f5525"
 
 :: Check if the sdk release folder exists
 if not exist "%scriptfile%" (
