@@ -8,7 +8,7 @@ If you encounter any issues while using this SDK, please open an issue in this r
 
 ## Installation
 
-You can download this SDK from the [Godot Asset Library](https://godotengine.org/asset-library/asset/14968). The download there will always contain the latest commit on the `main` branch.
+You can download this SDK from the [Godot Asset Library](https://godotengine.org/asset-library/asset/3576). The download there will always contain the latest commit on the `main` branch.
 
 If the above download does not work, you can use the direct link to the [latest release](https://github.com/VedalAI/neuro-game-sdk/releases/tag/godot).
 
