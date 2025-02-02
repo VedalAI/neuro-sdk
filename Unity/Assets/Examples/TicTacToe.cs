@@ -2,7 +2,6 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using Cysharp.Threading.Tasks;
 using JetBrains.Annotations;
 using NeuroSdk.Actions;
 using NeuroSdk.Json;
@@ -160,10 +159,9 @@ namespace NeuroSdk.Examples
             return ExecutionResult.Success();
         }
 
-        protected override UniTask ExecuteAsync(GameObject? cell)
+        protected override void Execute(GameObject? cell)
         {
             _ticTacToe.BotPlayInCell(cell!);
-            return UniTask.CompletedTask;
         }
 
         private IEnumerable<string> GetAvailableCells()

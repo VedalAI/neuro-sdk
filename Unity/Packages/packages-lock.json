@@ -1,12 +1,5 @@
 {
   "dependencies": {
-    "com.cysharp.unitask": {
-      "version": "https://github.com/Cysharp/UniTask.git?path=src/UniTask/Assets/Plugins/UniTask",
-      "depth": 0,
-      "source": "git",
-      "dependencies": {},
-      "hash": "f9fd769be7c634610f2a61aa914a1a55f34740e1"
-    },
     "com.endel.nativewebsocket": {
       "version": "https://github.com/endel/NativeWebSocket.git?path=NativeWebSocket/Assets",
       "depth": 0,

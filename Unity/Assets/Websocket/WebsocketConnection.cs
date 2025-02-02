@@ -1,8 +1,9 @@
 ﻿#nullable enable
 
 using System;
+using System.Collections;
 using System.Text;
-using Cysharp.Threading.Tasks;
+using System.Threading.Tasks;
 using JetBrains.Annotations;
 using NativeWebSocket;
 using NeuroSdk.Messages.API;
@@ -10,8 +11,6 @@ using NeuroSdk.Utilities;
 using Newtonsoft.Json.Linq;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.Networking;
-using UnityEngine.Serialization;
 
 namespace NeuroSdk.Websocket
 {
@@ -20,12 +19,15 @@ namespace NeuroSdk.Websocket
     {
         private const float RECONNECT_INTERVAL = 3;
 
+        private static bool _checkingSelf;
+
         private static WebsocketConnection? _instance;
         public static WebsocketConnection? Instance
         {
             get
             {
-                if (!_instance) Debug.LogWarning("Accessed WebsocketConnection.Instance without an instance being present");
+                if (!_instance && !_checkingSelf) Debug.LogWarning("Accessed WebsocketConnection.Instance without an instance being present");
+                _checkingSelf = false;
                 return _instance;
             }
             private set => _instance = value;
@@ -43,6 +45,7 @@ namespace NeuroSdk.Websocket
 
         private void Awake()
         {
+            _checkingSelf = true;
             if (Instance)
             {
                 Debug.Log("Destroying duplicate WebsocketConnection instance");
@@ -54,20 +57,19 @@ namespace NeuroSdk.Websocket
             Instance = this;
         }
 
-        private void Start() => StartWs().Forget();
+        private void Start() => StartCoroutine(StartWs());
 
-        private async UniTask Reconnect()
+        private IEnumerator Reconnect()
         {
-            await UniTask.SwitchToMainThread();
-            await UniTask.Delay(TimeSpan.FromSeconds(RECONNECT_INTERVAL));
-            await StartWs();
+            yield return new WaitForSeconds(RECONNECT_INTERVAL);
+            yield return StartWs();
         }
 
-        private async UniTask StartWs()
+        private IEnumerator StartWs()
         {
             try
             {
-                if (_socket?.State is WebSocketState.Open or WebSocketState.Connecting) await _socket.Close();
+                if (_socket?.State is WebSocketState.Open or WebSocketState.Connecting) _socket.Close();
             }
             catch
             {
@@ -75,50 +77,7 @@ namespace NeuroSdk.Websocket
             }
 
             string? websocketUrl = null;
-
-            if (Application.absoluteURL.IndexOf("?", StringComparison.Ordinal) != -1)
-            {
-                string[] urlSplits = Application.absoluteURL.Split('?');
-                if (urlSplits.Length > 1)
-                {
-                    string[] urlParamSplits = urlSplits[1].Split(new[] { "WebSocketURL=" }, StringSplitOptions.None);
-                    if (urlParamSplits.Length > 1)
-                    {
-                        string? param = urlParamSplits[1].Split('&')[0];
-                        if (!string.IsNullOrEmpty(param))
-                        {
-                            websocketUrl = param;
-                        }
-                    }
-                }
-            }
-
-            if (websocketUrl is null or "")
-            {
-                try
-                {
-                    Uri uri = new(Application.absoluteURL);
-                    string requestUrl = $"{uri.Scheme}://{uri.Host}:{uri.Port}/$env/NEURO_SDK_WS_URL";
-                    UnityWebRequest request = UnityWebRequest.Get(requestUrl);
-
-                    await request.SendWebRequest();
-                    if (TryGetResult(request, out string result))
-                    {
-                        websocketUrl = result;
-                    }
-                }
-                catch
-                {
-                    // ignored
-                }
-            }
-
-            if (websocketUrl is null or "")
-            {
-                websocketUrl = Environment.GetEnvironmentVariable("NEURO_SDK_WS_URL", EnvironmentVariableTarget.Process) ??
-                               Environment.GetEnvironmentVariable("NEURO_SDK_WS_URL", EnvironmentVariableTarget.User) ??
-                               Environment.GetEnvironmentVariable("NEURO_SDK_WS_URL", EnvironmentVariableTarget.Machine);
-            }
+            yield return WsUrlFinder.FindWsUrl(result => websocketUrl = result);
 
             if (websocketUrl is null or "")
             {
@@ -130,7 +89,7 @@ namespace NeuroSdk.Websocket
                 errMessage += " You need to specify a WebSocketURL query parameter in the URL or open a local server that serves the NEURO_SDK_WS_URL environment variable. See the documentation for more information.";
 #endif
                 Debug.LogError(errMessage);
-                return;
+                yield break;
             }
 
             // Websocket callbacks get run on separate threads! Watch out
@@ -139,7 +98,7 @@ namespace NeuroSdk.Websocket
             _socket.OnMessage += bytes =>
             {
                 string message = Encoding.UTF8.GetString(bytes);
-                ReceiveMessage(message).Forget();
+                StartCoroutine(ReceiveMessage(message));
             };
             _socket.OnError += error =>
             {
@@ -154,9 +113,9 @@ namespace NeuroSdk.Websocket
             {
                 onDisconnected?.Invoke(code);
                 if (code != WebSocketCloseCode.Abnormal) Debug.LogWarning($"Websocket connection has been closed with code {code}!");
-                Reconnect().Forget();
+                StartCoroutine(Reconnect());
             };
-            await _socket.Connect();
+            _socket.Connect();
         }
 
         private void Update()
@@ -166,7 +125,7 @@ namespace NeuroSdk.Websocket
             while (messageQueue.Count > 0)
             {
                 OutgoingMessageBuilder builder = messageQueue.Dequeue()!;
-                SendTask(builder).Forget();
+                StartCoroutine(SendTask(builder));
             }
 
 #if !UNITY_WEBGL || UNITY_EDITOR
@@ -174,17 +133,16 @@ namespace NeuroSdk.Websocket
 #endif
         }
 
-        private async UniTask SendTask(OutgoingMessageBuilder builder)
+        private IEnumerator SendTask(OutgoingMessageBuilder builder)
         {
             string message = Jason.Serialize(builder.GetWsMessage());
 
             Debug.Log($"Sending ws message {message}");
 
-            try
-            {
-                await _socket!.SendText(message);
-            }
-            catch
+            Task task = _socket!.SendText(message);
+            yield return new WaitUntil(() => task.IsCompleted);
+
+            if (!task.IsCompletedSuccessfully)
             {
                 Debug.LogError($"Failed to send ws message {message}");
                 messageQueue.Enqueue(builder);
@@ -232,12 +190,10 @@ namespace NeuroSdk.Websocket
             Instance.SendImmediate(messageBuilder);
         }
 
-        private async UniTask ReceiveMessage(string msgData)
+        private IEnumerator ReceiveMessage(string msgData)
         {
             try
             {
-                await UniTask.SwitchToMainThread();
-
                 Debug.Log("Received ws message " + msgData);
 
                 JObject message = JObject.Parse(msgData);
@@ -246,8 +202,8 @@ namespace NeuroSdk.Websocket
 
                 if (command == null)
                 {
-                    Debug.LogError("Received command that could not be deserialized. What the fuck are you doing?");
-                    return;
+                    Debug.LogError("Received command that could not be deserialized. Wtf are you doing?");
+                    yield break;
                 }
 
                 commandHandler.Handle(command, data);
@@ -257,20 +213,6 @@ namespace NeuroSdk.Websocket
                 Debug.LogError("Received invalid message");
                 Debug.LogError(e);
             }
-        }
-
-        private bool TryGetResult(UnityWebRequest request, out string result)
-        {
-#pragma warning disable CS0618 // Type or member is obsolete
-            if (request is { isDone: true, isHttpError: false, isNetworkError: false })
-#pragma warning restore CS0618 // Type or member is obsolete
-            {
-                result = request.downloadHandler.text;
-                return true;
-            }
-
-            result = "";
-            return false;
         }
     }
 }

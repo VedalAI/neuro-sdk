@@ -1,5 +1,4 @@
-﻿using Cysharp.Threading.Tasks;
-using JetBrains.Annotations;
+﻿using JetBrains.Annotations;
 using NeuroSdk.Actions;
 using NeuroSdk.Messages.API;
 using NeuroSdk.Websocket;
@@ -17,10 +16,9 @@ namespace NeuroSdk.Messages.Incoming
         {
         }
 
-        protected override UniTask ExecuteAsync()
+        protected override void Execute()
         {
             NeuroActionHandler.ResendRegisteredActions();
-            return UniTask.CompletedTask;
         }
     }
 }

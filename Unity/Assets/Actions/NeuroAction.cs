@@ -1,7 +1,6 @@
 ﻿#nullable enable
 
 using System;
-using Cysharp.Threading.Tasks;
 using JetBrains.Annotations;
 using NeuroSdk.Websocket;
 
@@ -23,7 +22,7 @@ namespace NeuroSdk.Actions
         }
 
         protected abstract ExecutionResult Validate(ActionJData actionData);
-        protected abstract UniTask ExecuteAsync();
+        protected abstract void Execute();
 
         protected sealed override ExecutionResult Validate(ActionJData actionData, out object? parsedData)
         {
@@ -32,7 +31,7 @@ namespace NeuroSdk.Actions
             return result;
         }
 
-        protected sealed override UniTask ExecuteAsync(object? data) => ExecuteAsync();
+        protected sealed override void Execute(object? data) => Execute();
     }
 
     /// <summary>
@@ -52,7 +51,7 @@ namespace NeuroSdk.Actions
         }
 
         protected abstract ExecutionResult Validate(ActionJData actionData, out TData? parsedData);
-        protected abstract UniTask ExecuteAsync(TData? parsedData);
+        protected abstract void Execute(TData? parsedData);
 
         protected sealed override ExecutionResult Validate(ActionJData actionData, out object? parsedData)
         {
@@ -61,7 +60,7 @@ namespace NeuroSdk.Actions
             return result;
         }
 
-        protected sealed override UniTask ExecuteAsync(object? parsedData) => ExecuteAsync((TData?) parsedData);
+        protected sealed override void Execute(object? parsedData) => Execute((TData?) parsedData);
     }
 
     /// <summary>

@@ -2,7 +2,6 @@
 
 using System;
 using System.Collections.Generic;
-using Cysharp.Threading.Tasks;
 using JetBrains.Annotations;
 using NeuroSdk.Messages.API;
 using NeuroSdk.Utilities;
@@ -52,7 +51,7 @@ namespace NeuroSdk.Websocket
 
                 if (validationResult.Successful)
                 {
-                    handler.ExecuteAsync(parsedData).Forget();
+                    handler.Execute(parsedData);
                 }
             }
         }

@@ -1,7 +1,6 @@
 ﻿#nullable enable
 
 using System;
-using Cysharp.Threading.Tasks;
 using JetBrains.Annotations;
 using NeuroSdk.Actions;
 using NeuroSdk.Messages.API;
@@ -89,9 +88,9 @@ namespace NeuroSdk.Messages.Incoming
             WebsocketConnection.Instance!.Send(new ActionResult(parsedData.Id, result));
         }
 
-        protected override UniTask ExecuteAsync(ParsedData? parsedData)
+        protected override void Execute(ParsedData? parsedData)
         {
-            return parsedData!.Action!.ExecuteAsync(parsedData.Data!);
+            parsedData!.Action!.Execute(parsedData.Data!);
         }
     }
 }

@@ -1,6 +1,5 @@
 ﻿#nullable enable
 
-using Cysharp.Threading.Tasks;
 using JetBrains.Annotations;
 using NeuroSdk.Websocket;
 
@@ -19,7 +18,7 @@ namespace NeuroSdk.Actions
         bool CanAddToActionWindow(ActionWindow actionWindow);
 
         ExecutionResult Validate(ActionJData actionData, out object? data);
-        UniTask ExecuteAsync(object? data);
+        void Execute(object? data);
 
         WsAction GetWsAction();
 

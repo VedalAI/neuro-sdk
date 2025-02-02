@@ -1,6 +1,3 @@
-﻿// See https://aka.ms/new-console-template for more information
+﻿using NeuroSdk;
 
-using NeuroSdk;
-
-Console.WriteLine("Hello, World!");
 NeuroSdkSetup.Initialize("NuGet Example");

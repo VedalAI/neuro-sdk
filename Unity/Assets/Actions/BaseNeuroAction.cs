@@ -1,7 +1,6 @@
 ﻿#nullable enable
 
 using System;
-using Cysharp.Threading.Tasks;
 using JetBrains.Annotations;
 using NeuroSdk.Json;
 using NeuroSdk.Websocket;
@@ -46,7 +45,7 @@ namespace NeuroSdk.Actions
             return result;
         }
 
-        UniTask INeuroAction.ExecuteAsync(object? data) => ExecuteAsync(data);
+        void INeuroAction.Execute(object? data) => Execute(data);
 
         public virtual WsAction GetWsAction()
         {
@@ -54,7 +53,7 @@ namespace NeuroSdk.Actions
         }
 
         protected abstract ExecutionResult Validate(ActionJData actionData, out object? parsedData);
-        protected abstract UniTask ExecuteAsync(object? data);
+        protected abstract void Execute(object? data);
 
         void INeuroAction.SetActionWindow(ActionWindow actionWindow)
         {
