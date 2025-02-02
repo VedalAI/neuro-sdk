@@ -11,7 +11,7 @@ namespace UnityEngine
     // ReSharper disable once UnusedType.Global
     public static class CoroutineExtensions
     {
-        private static Assembly? BepInExAssembly => AppDomain.CurrentDomain.GetAssemblies().FirstOrDefault(a => a.GetName().Name == "BepInEx.Unity.IL2CPP");
+        private static Type? CollectionExtensionsType => Type.GetType("BepInEx.Unity.IL2CPP.Utils.Collections.CollectionExtensions, BepInEx.Unity.IL2CPP");
 
         private static MethodInfo? StartIl2CppCoroutine => typeof(MonoBehaviour).GetMethods().FirstOrDefault(m => m.Name == nameof(MonoBehaviour.StartCoroutine) && m.GetParameters().Length == 1 && m.GetParameters()[0].ParameterType.FullName == "Il2CppSystem.Collections.IEnumerator");
 
@@ -29,16 +29,10 @@ namespace UnityEngine
 
         private static object WrapToIl2Cpp(this System.Collections.IEnumerator enumerator)
         {
-            Assembly? bepInExAssembly = BepInExAssembly;
-            if (bepInExAssembly == null)
-            {
-                throw new InvalidOperationException("Could not find 'BepInEx.Unity.IL2CPP' assembly");
-            }
-
-            Type? collectionExtensions = BepInExAssembly?.GetTypes().FirstOrDefault(t => t.Name == "CollectionExtensions");
+            Type? collectionExtensions = CollectionExtensionsType;
             if (collectionExtensions == null)
             {
-                throw new InvalidOperationException("Could not find 'CollectionExtensions' type in 'BepInEx.Unity.IL2CPP' assembly");
+                throw new InvalidOperationException("Could not find type 'BepInEx.Unity.IL2CPP.Utils.Collections.CollectionExtensions'");
             }
 
             MethodInfo? wrapToIl2CppMethod = collectionExtensions.GetMethods().FirstOrDefault(m => m.Name == "WrapToIl2Cpp" && m.GetParameters().Length == 1 && m.GetParameters()[0].ParameterType == typeof(System.Collections.IEnumerator));

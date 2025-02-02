@@ -1,14 +1,19 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System;
+using System.Reflection;
+using System.Runtime.CompilerServices;
 using NeuroSdk.Resources;
+using Reactor.Utilities.Attributes;
 
 namespace NeuroSdk
 {
     partial class NeuroSdkSetup
     {
         [ModuleInitializer]
+        [Obsolete("This method is only for compiler use and should not be called directly.", true)]
         internal static void ModuleInitializer()
         {
             ResourceManager.InjectAssemblies();
+            RegisterInIl2CppAttribute.Register(Assembly.GetExecutingAssembly());
         }
     }
 }

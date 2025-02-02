@@ -16,7 +16,7 @@ namespace NeuroSdk.Utilities
 
         private static readonly Lazy<MethodInfo?> _il2cppTypeFromMethod = new(() =>
         {
-            return AppDomain.CurrentDomain.GetAssemblies().SelectMany(a => a.GetTypes()).FirstOrDefault(t => t.FullName == "Il2CppInterop.Runtime.Il2CppType")?.GetMethods().FirstOrDefault(m => m.Name == "From" && m.GetParameters().Length == 1);
+            return Type.GetType("Il2CppInterop.Runtime.Il2CppTyp, Il2CppInterop.Runtime")?.GetMethods().FirstOrDefault(m => m.Name == "From" && m.GetParameters().Length == 1);
         });
 
         public static T AddTypedComponent<T>(GameObject obj, Type type)
