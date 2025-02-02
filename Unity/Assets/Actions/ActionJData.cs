@@ -39,7 +39,7 @@ namespace NeuroSdk.Actions
             catch (Exception e)
             {
                 Debug.LogError("Failed to deserialize ActionJData from string.");
-                Debug.LogError(e);
+                Debug.LogError(e.ToString());
                 actionJData = null;
                 return false;
             }

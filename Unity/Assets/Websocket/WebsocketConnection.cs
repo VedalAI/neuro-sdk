@@ -140,7 +140,8 @@ namespace NeuroSdk.Websocket
             Debug.Log($"Sending ws message {message}");
 
             Task task = _socket!.SendText(message);
-            yield return new WaitUntil(() => task.IsCompleted);
+            // ReSharper disable once RedundantDelegateCreation
+            yield return new WaitUntil(new Func<bool>(() => task.IsCompleted));
 
             if (task.IsCanceled || task.IsFaulted)
             {
@@ -211,7 +212,7 @@ namespace NeuroSdk.Websocket
             catch (Exception e)
             {
                 Debug.LogError("Received invalid message");
-                Debug.LogError(e);
+                Debug.LogError(e.ToString());
             }
         }
     }

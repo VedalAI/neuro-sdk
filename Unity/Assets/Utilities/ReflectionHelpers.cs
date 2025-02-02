@@ -26,7 +26,7 @@ namespace NeuroSdk.Utilities
                 {
                     GameObject obj = new(type.FullName);
                     obj.transform.SetParent(parent);
-                    yield return (T) (object) obj.AddComponent(type);
+                    yield return Il2CppUtils.AddTypedComponent<T>(obj, type);
                 }
                 else
                 {

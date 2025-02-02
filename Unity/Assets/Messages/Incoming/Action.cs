@@ -70,7 +70,7 @@ namespace NeuroSdk.Messages.Incoming
             catch (Exception e)
             {
                 Debug.LogError($"Exception caught while validating action {id}");
-                Debug.LogError(e);
+                Debug.LogError(e.ToString());
 
                 return ExecutionResult.Failure(Strings.ActionFailedCaughtException.Format(e.Message));
             }
