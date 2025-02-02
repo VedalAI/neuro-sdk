@@ -1,0 +1,2 @@
+- Removed WebGL support and jslib implementation.
+- Disabled automatic startup in favor of a manual call.

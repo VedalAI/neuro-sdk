@@ -22,7 +22,6 @@
     <!-- debug = check in IDE that it compiles without errors -->
     <ItemGroup Condition="'$(Configuration)' == 'Debug'">
         <PackageReference Include="UnityEngine.Modules" Version="2019.4.24" />
-        <Reference Include="Dependencies/endel.nativewebsocket.dll" />
         <Compile Include="..\Assets\**\*.cs" />
         <Compile Remove="..\Assets\Examples\*.cs" />
     </ItemGroup>

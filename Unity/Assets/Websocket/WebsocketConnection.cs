@@ -67,6 +67,8 @@ namespace NeuroSdk.Websocket
 
         private IEnumerator StartWs()
         {
+            if (MainThreadUtil.Instance == null) MainThreadUtil.Setup();
+
             try
             {
                 if (_socket?.State is WebSocketState.Open or WebSocketState.Connecting) _socket.Close();
