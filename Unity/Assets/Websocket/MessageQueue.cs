@@ -3,10 +3,12 @@
 using System.Collections.Generic;
 using NeuroSdk.Messages.API;
 using NeuroSdk.Messages.Outgoing;
+using NeuroSdk.Utilities.Il2Cpp;
 using UnityEngine;
 
 namespace NeuroSdk.Websocket
 {
+    [RegisterInIl2Cpp]
     // ReSharper disable once ClassWithVirtualMembersNeverInherited.Global
     public class MessageQueue : MonoBehaviour
     {

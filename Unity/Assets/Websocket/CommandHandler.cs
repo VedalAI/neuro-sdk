@@ -4,12 +4,16 @@ using System;
 using System.Collections.Generic;
 using NeuroSdk.Messages.API;
 using NeuroSdk.Utilities;
+using NeuroSdk.Utilities.Il2Cpp;
 using UnityEngine;
 
 namespace NeuroSdk.Websocket
 {
+    [RegisterInIl2Cpp]
+    // ReSharper disable once ClassWithVirtualMembersNeverInherited.Global
     public class CommandHandler : MonoBehaviour
     {
+        // ReSharper disable once MemberCanBePrivate.Global
         protected readonly List<IIncomingMessageHandler> Handlers = new();
 
         public virtual void Start()

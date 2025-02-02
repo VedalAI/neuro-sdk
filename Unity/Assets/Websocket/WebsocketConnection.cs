@@ -7,12 +7,14 @@ using System.Threading.Tasks;
 using NativeWebSocket;
 using NeuroSdk.Messages.API;
 using NeuroSdk.Utilities;
+using NeuroSdk.Utilities.Il2Cpp;
 using Newtonsoft.Json.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 
 namespace NeuroSdk.Websocket
 {
+    [RegisterInIl2Cpp]
     public sealed class WebsocketConnection : MonoBehaviour
     {
         private const float RECONNECT_INTERVAL = 3;

@@ -6,40 +6,11 @@ using System.Reflection;
 using NeuroSdk.Source.Il2Cpp.Wrappers;
 using UnityEngine;
 
-namespace Reactor.Utilities.Attributes
+namespace NeuroSdk.Utilities.Il2Cpp
 {
-    /// <summary>
-    /// Automatically registers an il2cpp type using <see cref="ClassInjector.RegisterTypeInIl2Cpp{T}()"/>.
-    /// </summary>
-    [AttributeUsage(AttributeTargets.Class)]
-    // ReSharper disable once ClassNeverInstantiated.Global
-    public sealed class RegisterInIl2CppAttribute : Attribute
+    partial class RegisterInIl2CppAttribute
     {
         private static readonly HashSet<Assembly> _registeredAssemblies = new();
-
-        /// <summary>
-        /// Gets il2cpp interfaces to be injected with this type.
-        /// </summary>
-        private Type[] Interfaces { get; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="RegisterInIl2CppAttribute"/> class without any interfaces.
-        /// </summary>
-        // ReSharper disable once UnusedMember.Global
-        public RegisterInIl2CppAttribute()
-        {
-            Interfaces = Type.EmptyTypes;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="RegisterInIl2CppAttribute"/> class with interfaces.
-        /// </summary>
-        /// <param name="interfaces">Il2Cpp interfaces to be injected with this type.</param>
-        // ReSharper disable once UnusedMember.Global
-        public RegisterInIl2CppAttribute(params Type[] interfaces)
-        {
-            Interfaces = interfaces;
-        }
 
         private static void RegisterType(Type type, Type[] interfaces)
         {

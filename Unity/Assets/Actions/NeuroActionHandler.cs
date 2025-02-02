@@ -4,11 +4,13 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using NeuroSdk.Messages.Outgoing;
+using NeuroSdk.Utilities.Il2Cpp;
 using NeuroSdk.Websocket;
 using UnityEngine;
 
 namespace NeuroSdk.Actions
 {
+    [RegisterInIl2Cpp]
     public sealed class NeuroActionHandler : MonoBehaviour
     {
         private static List<INeuroAction> _currentlyRegisteredActions = new();

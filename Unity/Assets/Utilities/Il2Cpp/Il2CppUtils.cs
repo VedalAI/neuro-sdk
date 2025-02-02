@@ -7,7 +7,7 @@ using UnityEngine;
 
 // ReSharper disable InconsistentNaming
 
-namespace NeuroSdk.Utilities
+namespace NeuroSdk.Utilities.Il2Cpp
 {
     internal static class Il2CppUtils
     {
