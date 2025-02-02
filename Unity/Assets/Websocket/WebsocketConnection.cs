@@ -173,30 +173,6 @@ namespace NeuroSdk.Websocket
             _socket.SendText(message);
         }
 
-        [Obsolete("Use WebsocketConnection.Instance.Send instead")]
-        public static void TrySend(OutgoingMessageBuilder messageBuilder)
-        {
-            if (Instance == null)
-            {
-                Debug.LogError("Cannot send message - WebsocketConnection instance is null");
-                return;
-            }
-
-            Instance.Send(messageBuilder);
-        }
-
-        [Obsolete("Use WebsocketConnection.Instance.SendImmediate instead")]
-        public static void TrySendImmediate(OutgoingMessageBuilder messageBuilder)
-        {
-            if (Instance == null)
-            {
-                Debug.LogError("Cannot send immediate message - WebsocketConnection instance is null");
-                return;
-            }
-
-            Instance.SendImmediate(messageBuilder);
-        }
-
         private IEnumerator ReceiveMessage(string msgData)
         {
             try
