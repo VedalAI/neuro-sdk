@@ -5,7 +5,8 @@ using System.Linq;
 using System.Reflection;
 using UnityEngine;
 
-namespace NeuroSdk.Source.Il2Cpp
+// ReSharper disable CheckNamespace
+namespace UnityEngine
 {
     // ReSharper disable once UnusedType.Global
     public static class CoroutineExtensions
@@ -15,7 +16,7 @@ namespace NeuroSdk.Source.Il2Cpp
         private static MethodInfo? StartIl2CppCoroutine => typeof(MonoBehaviour).GetMethods().FirstOrDefault(m => m.Name == nameof(MonoBehaviour.StartCoroutine) && m.GetParameters().Length == 1 && m.GetParameters()[0].ParameterType.FullName == "Il2CppSystem.Collections.IEnumerator");
 
         // ReSharper disable once UnusedMember.Global
-        public static Coroutine StartCoroutine(this MainThreadUtil mainThreadUtil, System.Collections.IEnumerator enumerator)
+        public static Coroutine StartCoroutine(this MonoBehaviour mainThreadUtil, System.Collections.IEnumerator enumerator)
         {
             MethodInfo? startCoroutineMethod = StartIl2CppCoroutine;
             if (startCoroutineMethod == null)

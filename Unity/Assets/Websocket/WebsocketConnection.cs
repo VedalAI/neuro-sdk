@@ -55,7 +55,8 @@ namespace NeuroSdk.Websocket
             Instance = this;
         }
 
-        private void Start() => StartCoroutine(StartWs());
+        // ReSharper disable once ArrangeThisQualifier -- Il2Cpp has this as an extension method
+        private void Start() => this.StartCoroutine(StartWs());
 
         private IEnumerator Reconnect()
         {
@@ -98,7 +99,8 @@ namespace NeuroSdk.Websocket
             _socket.OnMessage += bytes =>
             {
                 string message = Encoding.UTF8.GetString(bytes);
-                StartCoroutine(ReceiveMessage(message));
+                // ReSharper disable once ArrangeThisQualifier -- Il2Cpp has this as an extension method
+                this.StartCoroutine(ReceiveMessage(message));
             };
             _socket.OnError += error =>
             {
@@ -113,7 +115,8 @@ namespace NeuroSdk.Websocket
             {
                 onDisconnected?.Invoke(code);
                 if (code != WebSocketCloseCode.Abnormal) Debug.LogWarning($"Websocket connection has been closed with code {code}!");
-                StartCoroutine(Reconnect());
+                // ReSharper disable once ArrangeThisQualifier -- Il2Cpp has this as an extension method
+                this.StartCoroutine(Reconnect());
             };
             _socket.Connect();
         }
@@ -125,7 +128,8 @@ namespace NeuroSdk.Websocket
             while (messageQueue.Count > 0)
             {
                 OutgoingMessageBuilder builder = messageQueue.Dequeue()!;
-                StartCoroutine(SendTask(builder));
+                // ReSharper disable once ArrangeThisQualifier -- Il2Cpp has this as an extension method
+                this.StartCoroutine(SendTask(builder));
             }
 
 #if !UNITY_WEBGL || UNITY_EDITOR
