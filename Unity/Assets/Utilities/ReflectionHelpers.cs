@@ -11,9 +11,9 @@ namespace NeuroSdk.Utilities
 {
     internal static class ReflectionHelpers
     {
-        public static IEnumerable<T> GetAllInDomain<T>(Transform parent)
+        public static IEnumerable<T> GetAllInAssembly<T>(Assembly assembly, Transform parent)
         {
-            IEnumerable<Type> types = AppDomain.CurrentDomain.GetAssemblies().SelectMany(asm => asm.GetTypes())
+            IEnumerable<Type> types = assembly.GetTypes()
                 .Where(type => !type.IsAbstract)
                 .Where(type => typeof(T).IsAssignableFrom(type));
 

@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using NeuroSdk.Messages.API;
 using NeuroSdk.Utilities;
 using NeuroSdk.Utilities.Il2Cpp;
@@ -18,7 +19,13 @@ namespace NeuroSdk.Websocket
 
         public virtual void Start()
         {
-            Handlers.AddRange(ReflectionHelpers.GetAllInDomain<IIncomingMessageHandler>(transform));
+            AddHandlersFromAssembly(Assembly.GetExecutingAssembly());
+        }
+
+        // ReSharper disable once MemberCanBeProtected.Global
+        public virtual void AddHandlersFromAssembly(Assembly assembly)
+        {
+            Handlers.AddRange(ReflectionHelpers.GetAllInAssembly<IIncomingMessageHandler>(assembly, transform));
         }
 
         public virtual void Handle(string command, MessageJData data)
