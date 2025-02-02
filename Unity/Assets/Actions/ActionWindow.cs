@@ -3,18 +3,15 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using JetBrains.Annotations;
 using NeuroSdk.Messages.Outgoing;
 using NeuroSdk.Websocket;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace NeuroSdk.Actions
 {
     /// <summary>
     /// A wrapper class around the concept of an action window, which handles sending context, registering actions, forcing actions and unregistering the actions afterwards.
     /// </summary>
-    [PublicAPI]
     public sealed class ActionWindow : MonoBehaviour
     {
         #region Creation

@@ -1,11 +1,9 @@
 ﻿#nullable enable
 
-using JetBrains.Annotations;
 using NeuroSdk.Websocket;
 
 namespace NeuroSdk.Actions
 {
-    [UsedImplicitly(ImplicitUseKindFlags.InstantiatedNoFixedConstructorSignature)]
     public interface INeuroAction
     {
         string Name { get; }

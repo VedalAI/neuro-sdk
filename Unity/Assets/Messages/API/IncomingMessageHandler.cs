@@ -1,11 +1,9 @@
 ﻿#nullable enable
 
-using JetBrains.Annotations;
 using NeuroSdk.Websocket;
 
 namespace NeuroSdk.Messages.API
 {
-    [PublicAPI]
     public interface IIncomingMessageHandler
     {
         bool CanHandle(string command);
@@ -14,7 +12,6 @@ namespace NeuroSdk.Messages.API
         void Execute(object? parsedData);
     }
 
-    [PublicAPI]
     public abstract class IncomingMessageHandler : IIncomingMessageHandler
     {
         public abstract bool CanHandle(string command);
@@ -34,7 +31,6 @@ namespace NeuroSdk.Messages.API
         void IIncomingMessageHandler.Execute(object? parsedData) => Execute();
     }
 
-    [PublicAPI]
     public abstract class IncomingMessageHandler<T> : IIncomingMessageHandler
     {
         public abstract bool CanHandle(string command);

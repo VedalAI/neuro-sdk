@@ -1,16 +1,16 @@
 ﻿#nullable enable
 
 using System.Collections.Generic;
-using JetBrains.Annotations;
 using NeuroSdk.Messages.API;
 using NeuroSdk.Messages.Outgoing;
 using UnityEngine;
 
 namespace NeuroSdk.Websocket
 {
-    [PublicAPI]
+    // ReSharper disable once ClassWithVirtualMembersNeverInherited.Global
     public class MessageQueue : MonoBehaviour
     {
+        // ReSharper disable once MemberCanBePrivate.Global
         protected readonly List<OutgoingMessageBuilder> Messages = new() { new Startup() };
 
         public virtual int Count

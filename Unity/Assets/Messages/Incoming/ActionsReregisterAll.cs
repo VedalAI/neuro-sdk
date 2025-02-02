@@ -1,11 +1,10 @@
-﻿using JetBrains.Annotations;
-using NeuroSdk.Actions;
+﻿using NeuroSdk.Actions;
 using NeuroSdk.Messages.API;
 using NeuroSdk.Websocket;
 
 namespace NeuroSdk.Messages.Incoming
 {
-    [UsedImplicitly]
+    // ReSharper disable once UnusedType.Global
     public sealed class ActionsReregisterAll : IncomingMessageHandler
     {
         public override bool CanHandle(string command) => command == "actions/reregister_all";

@@ -3,14 +3,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using JetBrains.Annotations;
 using NeuroSdk.Messages.Outgoing;
 using NeuroSdk.Websocket;
 using UnityEngine;
 
 namespace NeuroSdk.Actions
 {
-    [PublicAPI]
     public sealed class NeuroActionHandler : MonoBehaviour
     {
         private static List<INeuroAction> _currentlyRegisteredActions = new();

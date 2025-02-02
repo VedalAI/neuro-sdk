@@ -1,7 +1,6 @@
 ﻿#nullable enable
 
 using System;
-using JetBrains.Annotations;
 using NeuroSdk.Actions;
 using NeuroSdk.Messages.API;
 using NeuroSdk.Messages.Outgoing;
@@ -11,7 +10,7 @@ using UnityEngine;
 
 namespace NeuroSdk.Messages.Incoming
 {
-    [UsedImplicitly]
+    // ReSharper disable once UnusedType.Global
     public sealed class Action : IncomingMessageHandler<Action.ParsedData>
     {
         public class ParsedData

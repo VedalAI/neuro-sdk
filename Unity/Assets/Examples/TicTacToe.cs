@@ -2,7 +2,6 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using JetBrains.Annotations;
 using NeuroSdk.Actions;
 using NeuroSdk.Json;
 using NeuroSdk.Messages.Outgoing;
@@ -24,7 +23,6 @@ namespace NeuroSdk.Examples
             Context.Send("A Tic Tac Toe game has started. You are playing as O.", true);
         }
 
-        [UsedImplicitly]
         public void PlayerPlayInCell(GameObject cell)
         {
             if (!_playerTurn) return;
@@ -100,7 +98,6 @@ namespace NeuroSdk.Examples
             resetButton.SetActive(true);
         }
 
-        [UsedImplicitly]
         public void ResetBoard()
         {
             resetButton.SetActive(false);

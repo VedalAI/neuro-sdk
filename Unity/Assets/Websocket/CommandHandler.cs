@@ -2,14 +2,12 @@
 
 using System;
 using System.Collections.Generic;
-using JetBrains.Annotations;
 using NeuroSdk.Messages.API;
 using NeuroSdk.Utilities;
 using UnityEngine;
 
 namespace NeuroSdk.Websocket
 {
-    [PublicAPI]
     public class CommandHandler : MonoBehaviour
     {
         protected readonly List<IIncomingMessageHandler> Handlers = new();

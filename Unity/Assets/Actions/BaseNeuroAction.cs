@@ -1,14 +1,12 @@
 ﻿#nullable enable
 
 using System;
-using JetBrains.Annotations;
 using NeuroSdk.Json;
 using NeuroSdk.Websocket;
 using UnityEngine;
 
 namespace NeuroSdk.Actions
 {
-    [PublicAPI]
     public abstract class BaseNeuroAction : INeuroAction
     {
         /// <summary>

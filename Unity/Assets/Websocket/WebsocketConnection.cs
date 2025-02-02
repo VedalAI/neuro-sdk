@@ -4,7 +4,6 @@ using System;
 using System.Collections;
 using System.Text;
 using System.Threading.Tasks;
-using JetBrains.Annotations;
 using NativeWebSocket;
 using NeuroSdk.Messages.API;
 using NeuroSdk.Utilities;
@@ -14,7 +13,6 @@ using UnityEngine.Events;
 
 namespace NeuroSdk.Websocket
 {
-    [PublicAPI]
     public sealed class WebsocketConnection : MonoBehaviour
     {
         private const float RECONNECT_INTERVAL = 3;

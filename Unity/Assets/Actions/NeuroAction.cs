@@ -1,7 +1,6 @@
 ﻿#nullable enable
 
 using System;
-using JetBrains.Annotations;
 using NeuroSdk.Websocket;
 
 namespace NeuroSdk.Actions
@@ -9,7 +8,6 @@ namespace NeuroSdk.Actions
     /// <summary>
     /// Represents a NeuroAction with no parsed state
     /// </summary>
-    [PublicAPI]
     public abstract class NeuroAction : BaseNeuroAction
     {
         protected NeuroAction()
@@ -38,7 +36,6 @@ namespace NeuroSdk.Actions
     /// Represents a NeuroAction with a parsed state
     /// </summary>
     /// <typeparam name="TData">The type of the state parameter passed between <see cref="Validate(NeuroSdk.Actions.ActionJData,out TData?)"/> and <see cref="ExecuteAsync(TData?)"/></typeparam>
-    [PublicAPI]
     public abstract class NeuroAction<TData> : BaseNeuroAction
     {
         protected NeuroAction()
@@ -68,7 +65,6 @@ namespace NeuroSdk.Actions
     /// Use this instead of <see cref="NeuroAction{TData}"/> when using primite types or structs to ensure proper nullability.
     /// </summary>
     /// <typeparam name="TData">The type of the state parameter passed between <see cref="NeuroAction{TData}.Validate(NeuroSdk.Actions.ActionJData,out TData?)"/> and <see cref="NeuroAction{TData}.ExecuteAsync(TData?)"/></typeparam>
-    [PublicAPI]
     public abstract class NeuroActionS<TData> : NeuroAction<TData?> where TData : struct
     {
         protected NeuroActionS()
