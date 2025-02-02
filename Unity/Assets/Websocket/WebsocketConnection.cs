@@ -142,7 +142,7 @@ namespace NeuroSdk.Websocket
             Task task = _socket!.SendText(message);
             yield return new WaitUntil(() => task.IsCompleted);
 
-            if (!task.IsCompletedSuccessfully)
+            if (task.IsCanceled || task.IsFaulted)
             {
                 Debug.LogError($"Failed to send ws message {message}");
                 messageQueue.Enqueue(builder);
