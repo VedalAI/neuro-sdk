@@ -1,11 +1,13 @@
-﻿using System;
+﻿#nullable enable
+
+using System;
 using System.Linq;
 
 namespace NeuroSdk.Source.Il2Cpp.Wrappers
 {
     internal static class ClassInjectorWrapper
     {
-        private static readonly Lazy<Type> _class = new(() => Type.GetType("Il2CppInterop.Runtime.Injection.ClassInjector, Il2CppInterop.Runtime"));
+        private static readonly Lazy<Type?> _class = new(() => Type.GetType("Il2CppInterop.Runtime.Injection.ClassInjector, Il2CppInterop.Runtime"));
 
         public static bool IsTypeRegisteredInIl2Cpp(Type type)
         {

@@ -1,5 +1,7 @@
 ﻿// Taken from https://github.com/NuclearPowered/Reactor/blob/master/Reactor/Utilities/Attributes/RegisterInIl2CppAttribute.cs
 
+#nullable enable
+
 using System;
 using System.Collections.Generic;
 using System.Reflection;
@@ -14,7 +16,7 @@ namespace NeuroSdk.Utilities.Il2Cpp
 
         private static void RegisterType(Type type, Type[] interfaces)
         {
-            RegisterInIl2CppAttribute baseTypeAttribute = type.BaseType?.GetCustomAttribute<RegisterInIl2CppAttribute>();
+            RegisterInIl2CppAttribute? baseTypeAttribute = type.BaseType?.GetCustomAttribute<RegisterInIl2CppAttribute>();
             if (baseTypeAttribute != null)
             {
                 RegisterType(type.BaseType!, baseTypeAttribute.Interfaces);

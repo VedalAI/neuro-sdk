@@ -1,4 +1,6 @@
-﻿using System;
+﻿#nullable enable
+
+using System;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using NeuroSdk.Resources;

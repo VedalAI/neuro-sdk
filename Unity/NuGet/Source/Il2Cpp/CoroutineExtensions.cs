@@ -3,7 +3,6 @@
 using System;
 using System.Linq;
 using System.Reflection;
-using UnityEngine;
 
 // ReSharper disable CheckNamespace
 namespace UnityEngine
@@ -11,14 +10,15 @@ namespace UnityEngine
     // ReSharper disable once UnusedType.Global
     public static class CoroutineExtensions
     {
-        private static Type? CollectionExtensionsType => Type.GetType("BepInEx.Unity.IL2CPP.Utils.Collections.CollectionExtensions, BepInEx.Unity.IL2CPP");
+        private static readonly Lazy<Type?> _collectionExtensionsType = new(() => Type.GetType("BepInEx.Unity.IL2CPP.Utils.Collections.CollectionExtensions, BepInEx.Unity.IL2CPP"));
 
-        private static MethodInfo? StartIl2CppCoroutine => typeof(MonoBehaviour).GetMethods().FirstOrDefault(m => m.Name == nameof(MonoBehaviour.StartCoroutine) && m.GetParameters().Length == 1 && m.GetParameters()[0].ParameterType.FullName == "Il2CppSystem.Collections.IEnumerator");
+        private static readonly Lazy<MethodInfo?> _startIl2CppCoroutine = new (() => typeof(MonoBehaviour).GetMethods().FirstOrDefault(m => m.Name == nameof(MonoBehaviour.StartCoroutine) && m.GetParameters().Length == 1 && m.GetParameters()[0].ParameterType.FullName == "Il2CppSystem.Collections.IEnumerator"));
 
+        // Class methods get prioritized over extension methods, so this extension method will only be called when the corresponding class method is missing.
         // ReSharper disable once UnusedMember.Global
         public static Coroutine StartCoroutine(this MonoBehaviour mainThreadUtil, System.Collections.IEnumerator enumerator)
         {
-            MethodInfo? startCoroutineMethod = StartIl2CppCoroutine;
+            MethodInfo? startCoroutineMethod = _startIl2CppCoroutine.Value;
             if (startCoroutineMethod == null)
             {
                 throw new MissingMethodException("Could not find UnityEngine.MonoBehaviour.StartCoroutine(Il2CppSystem.Collections.IEnumerator) method. How did you even get here? This method should only be called in an Il2Cpp environment.");
@@ -29,7 +29,7 @@ namespace UnityEngine
 
         private static object WrapToIl2Cpp(this System.Collections.IEnumerator enumerator)
         {
-            Type? collectionExtensions = CollectionExtensionsType;
+            Type? collectionExtensions = _collectionExtensionsType.Value;
             if (collectionExtensions == null)
             {
                 throw new InvalidOperationException("Could not find type 'BepInEx.Unity.IL2CPP.Utils.Collections.CollectionExtensions'");
