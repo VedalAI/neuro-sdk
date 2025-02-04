@@ -8,7 +8,8 @@ using System.Reflection;
 using NeuroSdk.Source.Il2Cpp.Wrappers;
 using UnityEngine;
 
-namespace NeuroSdk.Utilities.Il2Cpp
+// ReSharper disable once CheckNamespace
+namespace NeuroSdk.Utilities
 {
     partial class RegisterInIl2CppAttribute
     {

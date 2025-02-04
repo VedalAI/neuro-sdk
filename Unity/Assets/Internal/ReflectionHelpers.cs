@@ -4,10 +4,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using NeuroSdk.Utilities.Il2Cpp;
 using UnityEngine;
 
-namespace NeuroSdk.Utilities
+namespace NeuroSdk.Internal
 {
     internal static class ReflectionHelpers
     {
@@ -27,7 +26,7 @@ namespace NeuroSdk.Utilities
                 {
                     GameObject obj = new(type.FullName);
                     obj.transform.SetParent(parent);
-                    yield return Il2CppUtils.AddTypedComponent<T>(obj, type);
+                    yield return (T) (object) obj.AddComponent(type);
                 }
                 else
                 {

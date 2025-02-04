@@ -1,6 +1,6 @@
 ﻿#nullable enable
 
-namespace NeuroSdk.Utilities
+namespace NeuroSdk.Internal
 {
     internal sealed class FormatString
     {

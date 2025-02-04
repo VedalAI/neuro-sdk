@@ -13,7 +13,7 @@ using AOT;
 using System.Runtime.InteropServices;
 using UnityEngine;
 using System.Collections;
-using NeuroSdk.Utilities.Il2Cpp;
+using NeuroSdk.Utilities;
 
 [RegisterInIl2Cpp]
 public class MainThreadUtil : MonoBehaviour

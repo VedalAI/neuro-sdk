@@ -3,8 +3,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using NeuroSdk.Il2Cpp;
 using NeuroSdk.Messages.Outgoing;
-using NeuroSdk.Utilities.Il2Cpp;
 using NeuroSdk.Websocket;
 using UnityEngine;
 
@@ -13,7 +13,9 @@ namespace NeuroSdk.Actions
     /// <summary>
     /// A wrapper class around the concept of an action window, which handles sending context, registering actions, forcing actions and unregistering the actions afterwards.
     /// </summary>
+#pragma warning disable CS0618 // Type or member is obsolete
     [RegisterInIl2Cpp]
+#pragma warning restore CS0618 // Type or member is obsolete
     public sealed class ActionWindow : MonoBehaviour
     {
         #region Creation

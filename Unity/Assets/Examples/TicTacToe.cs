@@ -3,6 +3,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using NeuroSdk.Actions;
+using NeuroSdk.Internal;
 using NeuroSdk.Json;
 using NeuroSdk.Messages.Outgoing;
 using NeuroSdk.Websocket;

@@ -3,14 +3,16 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using NeuroSdk.Il2Cpp;
+using NeuroSdk.Internal;
 using NeuroSdk.Messages.API;
-using NeuroSdk.Utilities;
-using NeuroSdk.Utilities.Il2Cpp;
 using UnityEngine;
 
 namespace NeuroSdk.Websocket
 {
+#pragma warning disable CS0618 // Type or member is obsolete
     [RegisterInIl2Cpp]
+#pragma warning restore CS0618 // Type or member is obsolete
     // ReSharper disable once ClassWithVirtualMembersNeverInherited.Global
     public class CommandHandler : MonoBehaviour
     {

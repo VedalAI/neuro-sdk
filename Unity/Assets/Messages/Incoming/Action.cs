@@ -2,6 +2,7 @@
 
 using System;
 using NeuroSdk.Actions;
+using NeuroSdk.Internal;
 using NeuroSdk.Messages.API;
 using NeuroSdk.Messages.Outgoing;
 using NeuroSdk.Websocket;

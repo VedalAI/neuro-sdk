@@ -1,14 +1,16 @@
 ﻿#nullable enable
 
 using System.Collections.Generic;
+using NeuroSdk.Il2Cpp;
 using NeuroSdk.Messages.API;
 using NeuroSdk.Messages.Outgoing;
-using NeuroSdk.Utilities.Il2Cpp;
 using UnityEngine;
 
 namespace NeuroSdk.Websocket
 {
+#pragma warning disable CS0618 // Type or member is obsolete
     [RegisterInIl2Cpp]
+#pragma warning restore CS0618 // Type or member is obsolete
     // ReSharper disable once ClassWithVirtualMembersNeverInherited.Global
     public class MessageQueue : MonoBehaviour
     {

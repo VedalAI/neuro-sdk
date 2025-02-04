@@ -1,12 +1,15 @@
 ﻿using System;
 
-namespace NeuroSdk.Utilities.Il2Cpp
+namespace NeuroSdk.Il2Cpp
 {
     /// <summary>
     /// Automatically registers this class as an il2cpp type at runtime.
     ///
     /// This is only used for MODDED IL2CPP.
     /// </summary>
+    #if UNITY_EDITOR
+    [Obsolete("This attribute should only be used in modded Il2Cpp.")]
+    #endif
     [AttributeUsage(AttributeTargets.Class)]
     public sealed partial class RegisterInIl2CppAttribute : Attribute
     {

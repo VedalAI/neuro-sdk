@@ -5,16 +5,18 @@ using System.Collections;
 using System.Text;
 using System.Threading.Tasks;
 using NativeWebSocket;
+using NeuroSdk.Il2Cpp;
+using NeuroSdk.Internal;
 using NeuroSdk.Messages.API;
-using NeuroSdk.Utilities;
-using NeuroSdk.Utilities.Il2Cpp;
 using Newtonsoft.Json.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 
 namespace NeuroSdk.Websocket
 {
+#pragma warning disable CS0618 // Type or member is obsolete
     [RegisterInIl2Cpp]
+#pragma warning restore CS0618 // Type or member is obsolete
     public sealed class WebsocketConnection : MonoBehaviour
     {
         private const float RECONNECT_INTERVAL = 3;

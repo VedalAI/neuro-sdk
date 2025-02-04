@@ -1,9 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-using NeuroSdk.Utilities;
-
-[assembly: InternalsVisibleTo("NeuroSdk.Examples")]
-
-namespace NeuroSdk
+﻿namespace NeuroSdk.Internal
 {
     internal static class Strings
     {
