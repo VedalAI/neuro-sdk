@@ -24,9 +24,6 @@
         <PackageReference Include="UnityEngine.Modules" Version="2019.4.24" />
         <Compile Include="..\Assets\**\*.cs" />
         <Compile Remove="..\Assets\Examples\*.cs" />
-        <Compile Update="..\Assets\Utilities\RegisterInIl2CppAttribute.cs">
-          <Link>Utilities\RegisterInIl2CppAttribute.cs</Link>
-        </Compile>
     </ItemGroup>
 
     <ItemGroup>

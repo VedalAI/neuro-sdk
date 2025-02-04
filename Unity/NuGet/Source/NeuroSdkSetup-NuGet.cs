@@ -3,8 +3,8 @@
 using System;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using NeuroSdk.Il2Cpp;
 using NeuroSdk.Resources;
-using NeuroSdk.Utilities;
 
 namespace NeuroSdk
 {
