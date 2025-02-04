@@ -10,7 +10,7 @@ namespace UnityEngine
     // ReSharper disable once UnusedType.Global
     public static class StartCoroutineExtension
     {
-        private static readonly Lazy<MethodInfo?> _wrapToIl2CppMethod = new(() => Type.GetType("BepInEx.Unity.IL2CPP.Utils.Collections.CollectionExtensions, BepInEx.Unity.IL2CPP")?.GetMethods().FirstOrDefault(m => m.Name == "WrapToIl2Cpp" && m.GetParameters().Length == 1 && m.GetParameters()[0].ParameterType == typeof(System.Collections.IEnumerator)));
+        private static readonly Lazy<MethodInfo?> _wrapToIl2Cpp = new(() => Type.GetType("BepInEx.Unity.IL2CPP.Utils.Collections.CollectionExtensions, BepInEx.Unity.IL2CPP")?.GetMethods().FirstOrDefault(m => m.Name == "WrapToIl2Cpp" && m.GetParameters().Length == 1 && m.GetParameters()[0].ParameterType == typeof(System.Collections.IEnumerator)));
 
         private static readonly Lazy<MethodInfo?> _startIl2CppCoroutine = new (() => typeof(MonoBehaviour).GetMethods().FirstOrDefault(m => m.Name == nameof(MonoBehaviour.StartCoroutine) && m.GetParameters().Length == 1 && m.GetParameters()[0].ParameterType.FullName == "Il2CppSystem.Collections.IEnumerator"));
 
@@ -29,7 +29,7 @@ namespace UnityEngine
 
         private static object WrapToIl2Cpp(System.Collections.IEnumerator enumerator)
         {
-            MethodInfo? wrapToIl2CppMethod = _wrapToIl2CppMethod.Value;
+            MethodInfo? wrapToIl2CppMethod = _wrapToIl2Cpp.Value;
             if (wrapToIl2CppMethod == null)
             {
                 throw new InvalidOperationException("Could not find method 'BepInEx.Unity.IL2CPP.Utils.Collections.CollectionExtensions:WrapToIl2Cpp(System.Collections.IEnumerator)'");

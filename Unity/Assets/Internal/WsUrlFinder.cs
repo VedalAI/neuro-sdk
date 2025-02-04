@@ -5,9 +5,9 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.Networking;
 
-namespace NeuroSdk.Websocket
+namespace NeuroSdk.Internal
 {
-    public static class WsUrlFinder
+    internal static class WsUrlFinder
     {
         public static IEnumerator FindWsUrl(Action<string> callback)
         {
@@ -31,7 +31,7 @@ namespace NeuroSdk.Websocket
                 string[] urlParamSplits = urlSplits[1].Split(new[] { "WebSocketURL=" }, StringSplitOptions.None);
                 if (urlParamSplits.Length <= 1) return;
 
-                string? param = urlParamSplits[1].Split('&')[0];
+                string param = urlParamSplits[1].Split('&')[0];
                 if (string.IsNullOrEmpty(param)) return;
 
                 url = param;

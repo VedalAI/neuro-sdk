@@ -5,7 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using NeuroSdk.Source.Il2Cpp.Wrappers;
+using NeuroSdk.Internal;
 using UnityEngine;
 
 namespace NeuroSdk.Il2Cpp

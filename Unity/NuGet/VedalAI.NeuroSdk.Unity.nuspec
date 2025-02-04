@@ -22,7 +22,7 @@
         <file target="_content\" src="..\README.md" />
         <file target="images\" src="..\..\Assets\icon.png" />
 
-        <file target="_res\" src="Dependencies\*.dll" />
+        <file target="_res\" src="Resources\*.dll" />
         <file target="build\" src="VedalAI.NeuroSdk.Unity.props" />
         <file target="build\" src="VedalAI.NeuroSdk.Unity.targets" />
         <file target="contentfiles\cs\any\NeuroSdk" src="..\Assets\**\*.cs" exclude="..\Assets\Examples\**\*.cs" />

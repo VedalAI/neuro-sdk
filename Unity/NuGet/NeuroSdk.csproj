@@ -22,7 +22,7 @@
     <!-- debug = check in IDE that it compiles without errors -->
     <ItemGroup Condition="'$(Configuration)' == 'Debug'">
         <PackageReference Include="UnityEngine.Modules" Version="2019.4.24" />
-        <Compile Include="..\Assets\**\*.cs" />
+        <Compile Include="..\Assets\**\*.cs" LinkBase="NeuroSdk" />
         <Compile Remove="..\Assets\Examples\*.cs" />
     </ItemGroup>
 
