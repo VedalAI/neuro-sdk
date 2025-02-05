@@ -24,7 +24,7 @@ namespace UnityEngine
                 throw new MissingMethodException("Could not find method 'UnityEngine.MonoBehaviour.StartCoroutine(Il2CppSystem.Collections.IEnumerator)'. How did you even get here? This method should only be called in an Il2Cpp environment.");
             }
 
-            return (Coroutine) startCoroutineMethod.Invoke(mainThreadUtil, new[] { WrapToIl2Cpp(enumerator) });
+            return (Coroutine) startCoroutineMethod.Invoke(mainThreadUtil, new[] { WrapToIl2Cpp(enumerator) })!;
         }
 
         private static object WrapToIl2Cpp(System.Collections.IEnumerator enumerator)
@@ -35,7 +35,7 @@ namespace UnityEngine
                 throw new InvalidOperationException("Could not find method 'BepInEx.Unity.IL2CPP.Utils.Collections.CollectionExtensions:WrapToIl2Cpp(System.Collections.IEnumerator)'");
             }
 
-            return wrapToIl2CppMethod.Invoke(null, new object[] { enumerator });
+            return wrapToIl2CppMethod.Invoke(null, new object[] { enumerator })!;
         }
     }
 }

@@ -25,6 +25,7 @@ namespace NeuroSdk.Websocket
         }
 
         // ReSharper disable once MemberCanBeProtected.Global
+        [Il2CppHide]
         public virtual void AddHandlersFromAssembly(Assembly assembly)
         {
             Handlers.AddRange(ReflectionHelpers.GetAllInAssembly<IIncomingMessageHandler>(assembly, transform));

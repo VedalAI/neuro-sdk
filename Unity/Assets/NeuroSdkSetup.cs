@@ -1,4 +1,6 @@
-﻿using NeuroSdk.Actions;
+﻿#nullable enable
+
+using NeuroSdk.Actions;
 using NeuroSdk.Websocket;
 using UnityEngine;
 

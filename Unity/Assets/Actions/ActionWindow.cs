@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using NeuroSdk.Il2Cpp;
+using NeuroSdk.Internal;
 using NeuroSdk.Messages.Outgoing;
 using NeuroSdk.Websocket;
 using UnityEngine;
@@ -127,6 +128,7 @@ namespace NeuroSdk.Actions
         /// Add a new action to the list of possible actions that Neuro can pick from
         /// </summary>
         /// <returns>The <see cref="ActionWindow"/> itself for chaining.</returns>
+        [Il2CppHide]
         public ActionWindow AddAction(INeuroAction action)
         {
             if (!ValidateFrozen()) return this;
@@ -172,6 +174,7 @@ namespace NeuroSdk.Actions
         /// <param name="stateGetter">A getter for the state of the action force, invoked at force-time.</param>
         /// <param name="ephemeralContext">If true, the query and state won't be remembered after the action force is finished.</param>
         /// <returns>The <see cref="ActionWindow"/> itself for chaining.</returns>
+        [Il2CppHide]
         public ActionWindow SetForce(Func<bool> shouldForce, Func<string> queryGetter, Func<string?> stateGetter, bool ephemeralContext = false)
         {
             if (!ValidateFrozen()) return this;
@@ -190,6 +193,7 @@ namespace NeuroSdk.Actions
         /// <param name="shouldForce">When this returns true, the actions will be forced.</param>
         /// <param name="ephemeralContext">If true, the query and state won't be remembered after the action force is finished.</param>
         /// <returns>The <see cref="ActionWindow"/> itself for chaining.</returns>
+        [Il2CppHide]
         public ActionWindow SetForce(Func<bool> shouldForce, string query, string? state, bool ephemeralContext = false)
             => SetForce(shouldForce, () => query, () => state, ephemeralContext);
 
@@ -200,6 +204,7 @@ namespace NeuroSdk.Actions
         /// <param name="stateGetter">A getter for the state of the action force, invoked at force-time.</param>
         /// <param name="ephemeralContext">If true, the query and state won't be remembered after the action force is finished.</param>
         /// <returns>The <see cref="ActionWindow"/> itself for chaining.</returns>
+        [Il2CppHide]
         public ActionWindow SetForce(float afterSeconds, Func<string> queryGetter, Func<string?> stateGetter, bool ephemeralContext = false)
         {
             float time = afterSeconds;
@@ -242,6 +247,7 @@ namespace NeuroSdk.Actions
         /// </summary>
         /// <param name="shouldEnd">When this returns true, the actions will be unregistered.</param>
         /// <returns>The <see cref="ActionWindow"/> itself for chaining.</returns>
+        [Il2CppHide]
         public ActionWindow SetEnd(Func<bool> shouldEnd)
         {
             if (!ValidateFrozen()) return this;
@@ -293,6 +299,7 @@ namespace NeuroSdk.Actions
         /// <summary>
         /// Run an <see cref="ExecutionResult"/> through this ActionWindow. This is invoked automatically in <see cref="NeuroAction"/>, but if you are not using that class you will need to invoke this manually.
         /// </summary>
+        [Il2CppHide]
         public ExecutionResult Result(ExecutionResult result)
         {
             if (CurrentState <= State.Building) throw new InvalidOperationException("Cannot handle a result before registering the ActionWindow.");

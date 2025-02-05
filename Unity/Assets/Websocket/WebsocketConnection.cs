@@ -62,12 +62,14 @@ namespace NeuroSdk.Websocket
         // ReSharper disable once ArrangeThisQualifier -- Il2Cpp has this as an extension method
         private void Start() => this.StartCoroutine(StartWs());
 
+        [Il2CppHide]
         private IEnumerator Reconnect()
         {
             yield return new WaitForSeconds(RECONNECT_INTERVAL);
             yield return StartWs();
         }
 
+        [Il2CppHide]
         private IEnumerator StartWs()
         {
             if (MainThreadUtil.Instance == null) MainThreadUtil.Setup();
@@ -141,6 +143,7 @@ namespace NeuroSdk.Websocket
 #endif
         }
 
+        [Il2CppHide]
         private IEnumerator SendTask(OutgoingMessageBuilder builder)
         {
             string message = Jason.Serialize(builder.GetWsMessage());
@@ -158,8 +161,10 @@ namespace NeuroSdk.Websocket
             }
         }
 
+        [Il2CppHide]
         public void Send(OutgoingMessageBuilder messageBuilder) => messageQueue.Enqueue(messageBuilder);
 
+        [Il2CppHide]
         public void SendImmediate(OutgoingMessageBuilder messageBuilder)
         {
             string message = Jason.Serialize(messageBuilder.GetWsMessage());
@@ -175,6 +180,7 @@ namespace NeuroSdk.Websocket
             _socket.SendText(message);
         }
 
+        [Il2CppHide]
         private IEnumerator ReceiveMessage(string msgData)
         {
             try

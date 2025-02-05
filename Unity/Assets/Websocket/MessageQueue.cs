@@ -2,6 +2,7 @@
 
 using System.Collections.Generic;
 using NeuroSdk.Il2Cpp;
+using NeuroSdk.Internal;
 using NeuroSdk.Messages.API;
 using NeuroSdk.Messages.Outgoing;
 using UnityEngine;
@@ -28,6 +29,7 @@ namespace NeuroSdk.Websocket
             }
         }
 
+        [Il2CppHide]
         public virtual void Enqueue(OutgoingMessageBuilder message)
         {
             lock (Messages)
@@ -41,6 +43,7 @@ namespace NeuroSdk.Websocket
             }
         }
 
+        [Il2CppHide]
         public virtual OutgoingMessageBuilder? Dequeue()
         {
             lock (Messages)
