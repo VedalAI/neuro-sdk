@@ -5,7 +5,6 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using NeuroSdk.Il2Cpp;
 using NeuroSdk.Internal;
-using NeuroSdk.Resources;
 
 namespace NeuroSdk
 {

@@ -57,6 +57,8 @@ namespace NeuroSdk.Websocket
 
             DontDestroyOnLoad(gameObject);
             Instance = this;
+
+            Debug.Log("NeuroSdk WebsocketConnection is now awake");
         }
 
         // ReSharper disable once ArrangeThisQualifier -- Il2Cpp has this as an extension method
@@ -65,7 +67,7 @@ namespace NeuroSdk.Websocket
         [Il2CppHide]
         private IEnumerator Reconnect()
         {
-            yield return new WaitForSeconds(RECONNECT_INTERVAL);
+            yield return new WaitForSecondsRealtime(RECONNECT_INTERVAL);
             yield return StartWs();
         }
 

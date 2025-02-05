@@ -7,7 +7,7 @@ using System.Linq;
 using System.Reflection;
 using UnityEngine;
 
-namespace NeuroSdk.Resources
+namespace NeuroSdk.Internal
 {
     internal static class ResourceManager
     {
