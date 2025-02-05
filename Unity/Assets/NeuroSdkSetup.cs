@@ -14,7 +14,7 @@ namespace NeuroSdk
         // ReSharper disable once UnusedMember.Global
         public static void Initialize(string game)
         {
-            GameObject obj = new("NeuroSdk");
+            GameObject obj = new("NeuroSdk") { hideFlags = HideFlags.HideAndDontSave };
             WebsocketConnection connection = obj.AddComponent<WebsocketConnection>();
             connection.game = game;
             connection.messageQueue = obj.AddComponent<MessageQueue>();

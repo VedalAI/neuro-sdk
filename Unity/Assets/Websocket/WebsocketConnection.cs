@@ -37,7 +37,7 @@ namespace NeuroSdk.Websocket
 
         private static WebSocket? _socket;
 
-        public string game = null!;
+        public string game = "";
         public MessageQueue messageQueue = null!;
         public CommandHandler commandHandler = null!;
 
