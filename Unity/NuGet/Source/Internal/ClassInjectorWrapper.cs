@@ -17,7 +17,7 @@ namespace NeuroSdk.Internal
             MethodInfo? isTypeRegisteredInIl2Cpp = _isTypeRegisteredInIl2Cpp.Value;
             if (isTypeRegisteredInIl2Cpp == null) return true;
 
-            return (bool) isTypeRegisteredInIl2Cpp.Invoke(null, new object[] { type });
+            return (bool) isTypeRegisteredInIl2Cpp.Invoke(null, new object[] { type })!;
         }
 
         public static void RegisterTypeInIl2Cpp(Type type, Type[] interfaces)

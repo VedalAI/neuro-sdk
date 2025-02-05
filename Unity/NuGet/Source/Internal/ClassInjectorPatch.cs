@@ -43,8 +43,8 @@ namespace NeuroSdk.Internal
                 return;
             }
 
-            object harmonyInstance = Activator.CreateInstance(harmonyType, "NeuroSdkClassInjectorPatch");
-            object harmonyMethodInstance = Activator.CreateInstance(harmonyMethodType, _prefix);
+            object harmonyInstance = Activator.CreateInstance(harmonyType, "NeuroSdkClassInjectorPatch")!;
+            object harmonyMethodInstance = Activator.CreateInstance(harmonyMethodType, _prefix)!;
             patchMethod.Invoke(harmonyInstance, new[] { isMethodEligibleMethod, harmonyMethodInstance, null, null, null, null });
         }
 

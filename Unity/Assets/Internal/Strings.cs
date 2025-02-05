@@ -1,4 +1,6 @@
-﻿namespace NeuroSdk.Internal
+﻿#nullable enable
+
+namespace NeuroSdk.Internal
 {
     internal static class Strings
     {

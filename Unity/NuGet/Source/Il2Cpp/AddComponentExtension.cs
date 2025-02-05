@@ -24,7 +24,7 @@ namespace UnityEngine
                 throw new MissingMethodException("Could not find method 'UnityEngine.GameObject:AddComponent(Il2CppSystem.Type)'. How did you even get here? This method should only be called in an Il2Cpp environment.");
             }
 
-            return (Component) addComponentMethod.Invoke(obj, new[] { Il2CppTypeFrom(type) });
+            return (Component) addComponentMethod.Invoke(obj, new[] { Il2CppTypeFrom(type) })!;
         }
 
         private static object Il2CppTypeFrom(Type type)
@@ -35,7 +35,7 @@ namespace UnityEngine
                 throw new InvalidOperationException("Could not find method 'Il2CppInterop.Runtime.Il2CppType:From(System.Type)'");
             }
 
-            return il2CppTypeFromMethod.Invoke(null, new object[] { type });
+            return il2CppTypeFromMethod.Invoke(null, new object[] { type })!;
         }
     }
 }

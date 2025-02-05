@@ -44,9 +44,10 @@ namespace NeuroSdk.Actions
 
             _currentlyRegisteredActions.RemoveAll(actionsToRemove.Contains);
             _dyingActions.AddRange(actionsToRemove);
-            WebsocketConnection.Instance!.StartCoroutine(removeActions());
 
-            WebsocketConnection.Instance.Send(new ActionsUnregister(removeActionsList));
+            WebsocketConnection connection = WebsocketConnection.Instance!;
+            connection.StartCoroutine(removeActions());
+            connection.Send(new ActionsUnregister(removeActionsList));
 
             return;
 

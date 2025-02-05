@@ -48,7 +48,7 @@ namespace NeuroSdk.Il2Cpp
 
             foreach (Type type in assembly.GetTypes())
             {
-                RegisterInIl2CppAttribute attribute = type.GetCustomAttribute<RegisterInIl2CppAttribute>();
+                RegisterInIl2CppAttribute? attribute = type.GetCustomAttribute<RegisterInIl2CppAttribute>();
                 if (attribute != null)
                 {
                     RegisterType(type, attribute.Interfaces);

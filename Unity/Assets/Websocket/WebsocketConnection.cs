@@ -76,7 +76,7 @@ namespace NeuroSdk.Websocket
 
             try
             {
-                if (_socket?.State is WebSocketState.Open or WebSocketState.Connecting) _socket.Close();
+                if (_socket?.State is WebSocketState.Open or WebSocketState.Connecting) _ = _socket.Close();
             }
             catch
             {
@@ -124,7 +124,7 @@ namespace NeuroSdk.Websocket
                 // ReSharper disable once ArrangeThisQualifier -- Il2Cpp has this as an extension method
                 this.StartCoroutine(Reconnect());
             };
-            _socket.Connect();
+            _ = _socket.Connect();
         }
 
         private void Update()

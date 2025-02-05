@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using NeuroSdk.Il2Cpp;
 using NeuroSdk.Internal;
@@ -28,7 +29,7 @@ namespace NeuroSdk.Websocket
         [Il2CppHide]
         public virtual void AddHandlersFromAssembly(Assembly assembly)
         {
-            Handlers.AddRange(ReflectionHelpers.GetAllInAssembly<IIncomingMessageHandler>(assembly, transform));
+            Handlers.AddRange(ReflectionHelpers.GetAllInAssembly<IIncomingMessageHandler>(assembly, transform).Where(h => h != null)!);
         }
 
         public virtual void Handle(string command, MessageJData data)
