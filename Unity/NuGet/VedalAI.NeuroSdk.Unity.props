@@ -1,5 +1,4 @@
 <Project>
-    <Import Project="$(MSBuildThisFileDirectory)/VedalAI.NeuroSdk.Unity.targets" />
     <ItemGroup>
         <Compile Update="@(Compile)">
             <Visible Condition="'%(NugetItemType)' == 'Compile' and '%(NuGetPackageId)' == 'VedalAI.NeuroSdk.Unity'">false</Visible>

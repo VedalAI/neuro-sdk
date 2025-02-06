@@ -28,8 +28,8 @@
 
     <ItemGroup>
         <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-        <Compile Remove="Example\**\*" />
-        <None Remove="Example\**\*" />
-        <Folder Remove="Example\**\*" />
+        <Compile Remove="Tests\**" />
+        <Folder Remove="Tests\**" />
+        <None Remove="Tests\**" />
     </ItemGroup>
 </Project>
