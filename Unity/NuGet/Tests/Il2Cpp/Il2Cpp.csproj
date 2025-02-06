@@ -5,8 +5,6 @@
         <LangVersion>preview</LangVersion>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
-
-        <HasUnityReference>true</HasUnityReference>
     </PropertyGroup>
 
     <ItemGroup>

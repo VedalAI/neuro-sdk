@@ -10,7 +10,7 @@ namespace Il2Cpp
     {
         public override void Load()
         {
-            NeuroSdkSetup.Initialize("Mono");
+            NeuroSdkSetup.Initialize("Il2Cpp");
         }
     }
 }

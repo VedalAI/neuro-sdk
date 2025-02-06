@@ -2,6 +2,7 @@
     <Target Name="PreRestoreEnsureUnityReference" BeforeTargets="CoreCompile;Restore;CollectPackagesForRestore">
         <PropertyGroup>
             <HasUnityReference Condition="'%(PackageReference.Identity)' == 'UnityEngine.Modules'">true</HasUnityReference>
+            <HasUnityReference Condition="$([System.String]::new('%(PackageReference.Identity)').Contains('IL2CPP'))">true</HasUnityReference>
         </PropertyGroup>
         <ItemGroup Condition="'$(HasUnityReference)' != 'true'">
             <!-- fallback to prevent the user getting spammed with errors from code that isn't theirs -->
@@ -9,7 +10,12 @@
                      Condition="'%(Compile.NuGetPackageId)' == 'VedalAI.NeuroSdk.Unity'" />
         </ItemGroup>
         <Error Condition="'$(HasUnityReference)' != 'true'"
-               Text="This SDK depends on Unity. Please add a PackageReference to any version of UnityEngine.Modules to your project.
+               Code="MISSING_UNITY_REFERENCE"
+               Text="This SDK depends on Unity. Please add the required references to your project.
+
+Mods for Unity Mono games require a PackageReference to UnityEngine.Modules.
+Mods for Unity IL2CPP games instead require a PackageReference to BepInEx.Unity.IL2CPP and the game's GameLibs (e.g. CoreKeeper.GameLibs).
+
 To override this check (e.g. if you are referencing Unity dlls directly from disk), set the HasUnityReference property to true in a PropertyGroup in your project." />
     </Target>
 </Project>
