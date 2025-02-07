@@ -14,9 +14,6 @@
         <description>Neuro-sama Game SDK for Unity, designed to be used for modding Mono games with BepInEx.</description>
         <copyright>Copyright (C) Vedal AI 2024-2025</copyright>
         <repository type="git" url="https://github.com/VedalAI/neuro-game-sdk" branch="$branch$" commit="$commit$" />
-        <dependencies>
-            <dependency id="Newtonsoft.Json" version="13.0.3" />
-        </dependencies>
     </metadata>
     <files>
         <file target="_content\" src="..\README.md" />

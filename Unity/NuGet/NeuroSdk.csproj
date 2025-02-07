@@ -22,12 +22,12 @@
     <!-- debug = check in IDE that it compiles without errors -->
     <ItemGroup Condition="'$(Configuration)' == 'Debug'">
         <PackageReference Include="UnityEngine.Modules" Version="2019.4.24" />
+        <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
         <Compile Include="..\Assets\**\*.cs" LinkBase="NeuroSdk" />
         <Compile Remove="..\Assets\Examples\*.cs" />
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
         <Compile Remove="Tests\**" />
         <Folder Remove="Tests\**" />
         <None Remove="Tests\**" />
