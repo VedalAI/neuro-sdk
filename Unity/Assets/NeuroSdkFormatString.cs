@@ -1,12 +1,12 @@
 ﻿#nullable enable
 
-namespace NeuroSdk.Internal
+namespace NeuroSdk
 {
-    internal sealed class FormatString
+    public sealed class NeuroSdkFormatString
     {
         private readonly string _str;
 
-        private FormatString(string str)
+        private NeuroSdkFormatString(string str)
         {
             _str = str;
         }
@@ -16,9 +16,9 @@ namespace NeuroSdk.Internal
             return string.Format(_str, args);
         }
 
-        public static implicit operator FormatString(string str)
+        public static implicit operator NeuroSdkFormatString(string str)
         {
-            return new FormatString(str);
+            return new NeuroSdkFormatString(str);
         }
     }
 }

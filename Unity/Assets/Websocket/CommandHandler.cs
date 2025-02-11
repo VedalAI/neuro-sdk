@@ -49,7 +49,7 @@ namespace NeuroSdk.Websocket
                     Debug.LogError("Caught exception during validation at WebsocketConnection level - this is bad.");
                     Debug.LogError(e.ToString());
 
-                    validationResult = ExecutionResult.Failure(Strings.MessageHandlerFailedCaughtException.Format(e.Message));
+                    validationResult = ExecutionResult.Failure(NeuroSdkStrings.MessageHandlerFailedCaughtException.Format(e.Message));
                     parsedData = null;
                 }
 
