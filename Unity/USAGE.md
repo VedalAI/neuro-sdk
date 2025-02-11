@@ -34,15 +34,10 @@ public class JudgeAction : NeuroAction<Button>
     public override string Name => "judge";
     protected override string Description => "Decide if the defendant is innocent or guilty.";
 
-    protected override JsonSchema Schema => new()
+    protected override JsonSchema Schema => QJS.WrapObject(new Dictionary<string, JsonSchema>
     {
-        Type = JsonSchemaType.Object,
-        Required = new List<string> { "verdict" },
-        Properties = new Dictionary<string, JsonSchema>
-        {
-            ["verdict"] = QJS.Enum(new string[] { "innocent", "guilty" })
-        }
-    };
+        ["verdict"] = QJS.Enum(new string[] { "innocent", "guilty" })
+    });
 
     protected override ExecutionResult Validate(ActionJData actionData, out Button? button)
     {

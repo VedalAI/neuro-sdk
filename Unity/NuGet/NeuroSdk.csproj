@@ -25,6 +25,7 @@
         <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
         <Compile Include="..\Assets\**\*.cs" LinkBase="NeuroSdk" />
         <Compile Remove="..\Assets\Examples\*.cs" />
+        <None Include="..\Assets\package.json" />
     </ItemGroup>
 
     <ItemGroup>
