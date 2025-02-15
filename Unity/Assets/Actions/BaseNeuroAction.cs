@@ -26,7 +26,7 @@ namespace NeuroSdk.Actions
 
             if (ActionWindow != null)
             {
-                return ActionWindow.Result(result);
+                return new ActionWindowResponse(ActionWindow).Result(result);
             }
 
             return result;

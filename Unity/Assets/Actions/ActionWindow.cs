@@ -296,21 +296,6 @@ namespace NeuroSdk.Actions
 
         #region Handling
 
-        /// <summary>
-        /// Run an <see cref="ExecutionResult"/> through this ActionWindow. This is invoked automatically in <see cref="NeuroAction"/>, but if you are not using that class you will need to invoke this manually.
-        /// </summary>
-        [Il2CppHide]
-        public ExecutionResult Result(ExecutionResult result)
-        {
-            if (CurrentState <= State.Building) throw new InvalidOperationException("Cannot handle a result before registering the ActionWindow.");
-            if (CurrentState >= State.Ended) throw new InvalidOperationException("Cannot handle a result after the ActionWindow has ended.");
-
-            if (result.Successful) End();
-            // else if (CurrentState == State.Forced) Force(); // Vedal is now responsible for retrying forces
-
-            return result;
-        }
-
         private void Update()
         {
             if (CurrentState != State.Registered) return;
