@@ -14,17 +14,6 @@ namespace NeuroSdk.Actions
         /// </summary>
         public ActionWindow? ActionWindow { get; private set; }
 
-        protected BaseNeuroAction()
-        {
-            ActionWindow = null;
-        }
-
-        [Obsolete("Setting the action window is now handled by the Neuro SDK. Please use the parameterless constructor instead.")]
-        protected BaseNeuroAction(ActionWindow? actionWindow)
-        {
-            ActionWindow = actionWindow;
-        }
-
         public abstract string Name { get; }
         protected abstract string Description { get; }
         protected abstract JsonSchema? Schema { get; }

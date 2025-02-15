@@ -10,15 +10,6 @@ namespace NeuroSdk.Actions
     /// </summary>
     public abstract class NeuroAction : BaseNeuroAction
     {
-        protected NeuroAction()
-        {
-        }
-
-        [Obsolete("Setting the action window is now handled by the Neuro SDK. Please use the parameterless constructor instead.")]
-        protected NeuroAction(ActionWindow? actionWindow) : base(actionWindow)
-        {
-        }
-
         protected abstract ExecutionResult Validate(ActionJData actionData);
         protected abstract void Execute();
 
@@ -38,15 +29,6 @@ namespace NeuroSdk.Actions
     /// <typeparam name="TData">The type of the state parameter passed between <see cref="Validate(NeuroSdk.Actions.ActionJData,out TData?)"/> and <see cref="ExecuteAsync(TData?)"/></typeparam>
     public abstract class NeuroAction<TData> : BaseNeuroAction
     {
-        protected NeuroAction()
-        {
-        }
-
-        [Obsolete("This way of setting the action window is obsolete. Please use the parameterless constructor instead.")]
-        protected NeuroAction(ActionWindow? actionWindow) : base(actionWindow)
-        {
-        }
-
         protected abstract ExecutionResult Validate(ActionJData actionData, out TData? parsedData);
         protected abstract void Execute(TData? parsedData);
 
@@ -67,13 +49,5 @@ namespace NeuroSdk.Actions
     /// <typeparam name="TData">The type of the state parameter passed between <see cref="NeuroAction{TData}.Validate(NeuroSdk.Actions.ActionJData,out TData?)"/> and <see cref="NeuroAction{TData}.ExecuteAsync(TData?)"/></typeparam>
     public abstract class NeuroActionS<TData> : NeuroAction<TData?> where TData : struct
     {
-        protected NeuroActionS()
-        {
-        }
-
-        [Obsolete("Setting the action window is now handled by the Neuro SDK. Please use the parameterless constructor instead.")]
-        protected NeuroActionS(ActionWindow? actionWindow) : base(actionWindow)
-        {
-        }
     }
 }
