@@ -3,7 +3,7 @@
   "displayName": "Neuro SDK",
   "description": "Neuro SDK for Unity",
   "author": "Vedal AI",
-  "version": "2.0.0-pre.2",
+  "version": "2.0.0-pre.3",
   "unity": "2022.3",
   "dependencies": {
     "com.unity.nuget.newtonsoft-json": "3.2.1",
