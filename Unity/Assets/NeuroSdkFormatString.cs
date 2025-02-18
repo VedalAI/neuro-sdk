@@ -20,5 +20,10 @@ namespace NeuroSdk
         {
             return new NeuroSdkFormatString(str);
         }
+
+        public static NeuroSdkFormatString operator +(NeuroSdkFormatString str1, NeuroSdkFormatString str2)
+        {
+            return new NeuroSdkFormatString(str1._str + str2._str);
+        }
     }
 }
