@@ -111,8 +111,8 @@ namespace NeuroSdk.Websocket
 
                 IEnumerator coroutine()
                 {
+                    yield return null;
                     onConnected?.Invoke();
-                    yield break;
                 }
             };
             _socket.OnMessage += bytes =>
@@ -129,14 +129,14 @@ namespace NeuroSdk.Websocket
 
                 IEnumerator coroutine()
                 {
+                    yield return null;
+
                     onError?.Invoke(error);
                     if (error != "Unable to connect to the remote server")
                     {
                         Debug.LogError("Websocket connection has encountered an error!");
                         Debug.LogError(error);
                     }
-
-                    yield break;
                 }
             };
             _socket.OnClose += code =>
@@ -147,11 +147,12 @@ namespace NeuroSdk.Websocket
 
                 IEnumerator coroutine()
                 {
+                    yield return null;
+
                     onDisconnected?.Invoke(code);
                     if (code != WebSocketCloseCode.Abnormal) Debug.LogWarning($"Websocket connection has been closed with code {code}!");
                     // ReSharper disable once ArrangeThisQualifier -- Il2Cpp has this as an extension method
                     this.StartCoroutine(Reconnect());
-                    yield break;
                 }
             };
 
@@ -214,8 +215,11 @@ namespace NeuroSdk.Websocket
         [Il2CppHide]
         private IEnumerator ReceiveMessage(string msgData)
         {
+            yield return null;
+
             try
             {
+
                 Debug.Log("Received ws message " + msgData);
 
                 JObject message = JObject.Parse(msgData);

@@ -3,6 +3,7 @@
 using System;
 using NeuroSdk.Actions;
 using NeuroSdk.Internal;
+using NeuroSdk.Json;
 using NeuroSdk.Messages.API;
 using NeuroSdk.Messages.Outgoing;
 using NeuroSdk.Websocket;
@@ -33,7 +34,7 @@ namespace NeuroSdk.Messages.Incoming
                 return ExecutionResult.VedalFailure(NeuroSdkStrings.ActionFailedNoData);
             }
 
-            string? id = messageData.Data["id"]?.Value<string>();
+            string? id = messageData.GetValue<string>("id");
 
             if (id is null or "")
             {
@@ -45,8 +46,8 @@ namespace NeuroSdk.Messages.Incoming
 
             try
             {
-                string? name = messageData.Data["name"]?.Value<string>();
-                string? stringifiedData = messageData.Data["data"]?.Value<string>();
+                string? name = messageData.GetValue<string>("name");
+                string? stringifiedData = messageData.GetValue<string>("data");
 
                 if (name is null or "") return ExecutionResult.VedalFailure(NeuroSdkStrings.ActionFailedNoName);
 

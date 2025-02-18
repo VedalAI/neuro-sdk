@@ -1,6 +1,7 @@
 ﻿#nullable enable
 
 using System;
+using NeuroSdk.Json;
 using Newtonsoft.Json.Linq;
 using UnityEngine;
 
@@ -9,7 +10,7 @@ namespace NeuroSdk.Actions
     /// <summary>
     /// A wrapper class for the data of an <see cref="NeuroSdk.Messages.Incoming.Action"/> message.
     /// </summary>
-    public sealed class ActionJData
+    public sealed class ActionJData : IJTokenWrapper
     {
         public JToken? Data { get; private set; }
 
