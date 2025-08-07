@@ -8,10 +8,10 @@ namespace NeuroSdk.Json;
 
 public static class JTokenWrapperExtensions
 {
-    public static T? GetValue<T>(this IJTokenWrapper data, string key)
+    public static T? GetValue<T>(this IJTokenWrapper data, string key, T? defaultValue = default)
     {
         JToken? jToken = data.Data?[key];
-        return jToken != null ? jToken.Value<T>() : default;
+        return jToken != null ? jToken.Value<T>() : defaultValue;
     }
 
     public static IEnumerable<T?> GetArray<T>(this IJTokenWrapper data, string key)
