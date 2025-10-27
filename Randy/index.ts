@@ -40,7 +40,7 @@ wss.on("connection", function connection(ws) {
 });
 
 function sendAction(actionName: string) {
-    const id = Math.random().toString();
+    const id = crypto.randomUUID();
 
     if (actionName == "choose_name") {
         send({command: "action", data: {id, name: "choose_name", data: JSON.stringify({name: "RANDY"})}});
