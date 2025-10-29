@@ -15,6 +15,7 @@ app.post("/", (req, res) => {
 
 const wss = new WebSocketServer({port: 8000});
 
+let actionId: number = 0;
 let connections: WebSocket[] = [];
 let actions: Action[] = [];
 let pendingResult: { id: string; actionName: string } | null = null;
@@ -40,7 +41,8 @@ wss.on("connection", function connection(ws) {
 });
 
 function sendAction(actionName: string) {
-    const id = Math.random().toString();
+    const id = actionId.toString();
+	actionId++;
 
     if (actionName == "choose_name") {
         send({command: "action", data: {id, name: "choose_name", data: JSON.stringify({name: "RANDY"})}});
