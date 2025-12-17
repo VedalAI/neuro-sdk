@@ -1,5 +1,8 @@
 # Changelog
 
+## 17th of December 2025, 15:00 GMT
+- Added `priority` to the `actions/force` message. This allows you to specify how urgently Neuro should respond to the action force when she is speaking. The default is `"low"`, which will cause Neuro to wait until she finishes speaking before responding. `"medium"` causes her to finish her current utterance sooner. `"high"` prompts her to process the action force immediately, shortening her utterance and then responding. `"critical"` will interrupt her speech and make her respond at once. Use `"critical"` with caution, as it may lead to abrupt and potentially jarring interruptions. The default behavior before this was added is identical to `"low"`.
+
 ## 29th of July 2025, 02:15 GMT
 - Added `multipleOf` to the list of unsupported keywords in Action schemas and noted that `uniqueItems` may or may not work, and you should perform your own checks accordingly.
 - Clarified that Action schemas must have `"type": "object"`. If your schema has a different type, wrap it in an object with a property instead.

@@ -144,6 +144,7 @@ This message forces Neuro to execute one of the listed actions as soon as possib
         "state": string?,
         "query": string,
         "ephemeral_context": boolean?, // Defaults to false
+        "priority": "low" | "medium" | "high" | "critical", // Defaults to "low"
         "action_names": string[]
     }
 }
@@ -153,6 +154,7 @@ This message forces Neuro to execute one of the listed actions as soon as possib
 - `state`: An arbitrary string that describes the current state of the game. This can be plaintext, JSON, Markdown, or any other format. **This information will be directly received by Neuro.**
 - `query`: A plaintext message that tells Neuro what she is currently supposed to be doing (e.g. `"It is now your turn. Please perform an action. If you want to use any items, you should use them before picking up the shotgun."`). **This information will be directly received by Neuro.**
 - `ephemeral_context`: If `false`, the context provided in the `state` and `query` parameters will be remembered by Neuro after the actions force is compelted. If `true`, Neuro will only remember it for the duration of the actions force.
+- `priority`: Determines how urgently Neuro should respond to the action force when she is speaking. If Neuro is not speaking, this setting has no effect. The default is `"low"`, which will cause Neuro to wait until she finishes speaking before responding. `"medium"` causes her to finish her current utterance sooner. `"high"` prompts her to process the action force immediately, shortening her utterance and then responding. `"critical"` will interrupt her speech and make her respond at once. Use `"critical"` with caution, as it may lead to abrupt and potentially jarring interruptions.
 - `action_names`: The names of the actions that Neuro should choose from.
 <!-- - `main_thread: bool?`: Same as above. -->
 

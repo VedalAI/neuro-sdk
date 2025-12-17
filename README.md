@@ -8,7 +8,7 @@ There are also official SDKs available for Unity and Godot, as well as community
 
 Significant API and SDK changes will be documented in the [CHANGELOG.md](./CHANGELOG.md) file.
 
-Last update: 29th of July 2025, 02:15 GMT
+Last update: 17th of December 2025, 15:00 GMT
 
 ## Contents
 
@@ -58,13 +58,13 @@ Third-party SDKs created and maintained by the community.
 
 The official SDKs have been created and optimized for turn-based games, namely Inscryption, Liar's Bar and Buckshot Roulette.
 
-**Due to how the API works, we do not recommend using them with real-time games.**
+Games that require a non-low APM will generally not work well without Neuro only controlling the high-level actions and letting another system decide how to handle the low-level actions.
 
 Since you need to describe the entire game state in text, and receive actions in text, only games where that is feasible will work well with this API.
 <details>
 <summary>Examples</summary>
 
-Games that could work
+Games that could work well
 - Inscryption
 - Liar's Bar
 - Buckshot Roulette
@@ -74,10 +74,8 @@ Games that could work
 - Most visual novels
 - Most card games
 
-Games that would not work
-
-- Among Us
-- Skyrim
+Games that would probably not work well
+- Skyrim (solo)
 - League of Legends
 - Celeste
 - Euro Truck Sim
@@ -85,9 +83,5 @@ Games that would not work
 - Any real-time strategy game
 - Shooters
 - Platformers
-
-You get the idea. Turn based games in general are perfect for this. Anything else and you're kinda stretching the limits of what the API can do.
-
-Vedal said you can use this for more complex games but he told me "you wouldn't get it" so I'm not even going to try to imagine how this would even work, and I am just going to assume that he is wrong.
 
 </details>
