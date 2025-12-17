@@ -55,7 +55,7 @@ An action is a registerable command that Neuro can execute whenever she wants.
 - `schema`: A **valid** simple JSON schema object that describes how the response data should look like. If your action does not have any parameters, you can omit this field or set it to `{}`. If you provide a schema, it must be of `type` `"object"`. **This information will be directly received by Neuro.**
 
 > [!Note]
-> The following JSON schema keywords are probably not supported: `$anchor`, `$comment`, `$defs`, `$dynamicAnchor`, `$dynamicRef`, `$id`, `$ref`, `$schema`, `$vocabulary`, `additionalProperties`, `allOf`, `anyOf`, `contentEncoding`, `contentMediaType`, `contentSchema`, `dependentRequired`, `dependentSchemas`, `deprecated`, `description`, `else`, `if`, `maxProperties`, `minProperties`, `multipleOf`, `not`, `oneOf`, `patternProperties`, `readOnly`, `then`, `title`, `unevaluatedItems`, `unevaluatedProperties`, `writeOnly`.
+> The following JSON schema keywords are probably not supported well: `$anchor`, `$comment`, `$defs`, `$dynamicAnchor`, `$dynamicRef`, `$id`, `$ref`, `$schema`, `$vocabulary`, `additionalProperties`, `allOf`, `anyOf`, `contentEncoding`, `contentMediaType`, `contentSchema`, `dependentRequired`, `dependentSchemas`, `deprecated`, `description`, `else`, `if`, `maxProperties`, `minProperties`, `multipleOf`, `not`, `oneOf`, `patternProperties`, `readOnly`, `then`, `title`, `unevaluatedItems`, `unevaluatedProperties`, `writeOnly`.
 > It is not known if `uniqueItems` works or not, you may pass it if you need it, but you should not trust it and you should perform your own checks as well.
 
 ## Outgoing Messages (C2S, Game to Neuro)
@@ -151,7 +151,7 @@ This message forces Neuro to execute one of the listed actions as soon as possib
 ```
 
 #### Parameters
-- `state`: An arbitrary string that describes the current state of the game. This can be plaintext, JSON, Markdown, or any other format. **This information will be directly received by Neuro.**
+- `state`: An arbitrary string that describes the current state of the game. This can be plaintext, JSON, Markdown, or any other format. We recommend using markdown. **This information will be directly received by Neuro.**
 - `query`: A plaintext message that tells Neuro what she is currently supposed to be doing (e.g. `"It is now your turn. Please perform an action. If you want to use any items, you should use them before picking up the shotgun."`). **This information will be directly received by Neuro.**
 - `ephemeral_context`: If `false`, the context provided in the `state` and `query` parameters will be remembered by Neuro after the actions force is compelted. If `true`, Neuro will only remember it for the duration of the actions force.
 - `priority`: Determines how urgently Neuro should respond to the action force when she is speaking. If Neuro is not speaking, this setting has no effect. The default is `"low"`, which will cause Neuro to wait until she finishes speaking before responding. `"medium"` causes her to finish her current utterance sooner. `"high"` prompts her to process the action force immediately, shortening her utterance and then responding. `"critical"` will interrupt her speech and make her respond at once. Use `"critical"` with caution, as it may lead to abrupt and potentially jarring interruptions.
