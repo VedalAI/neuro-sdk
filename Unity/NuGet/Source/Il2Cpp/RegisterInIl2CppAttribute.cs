@@ -5,10 +5,10 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using NeuroSdk.Source.Il2Cpp.Wrappers;
+using NeuroSdk.Internal;
 using UnityEngine;
 
-namespace NeuroSdk.Utilities.Il2Cpp
+namespace NeuroSdk.Il2Cpp
 {
     partial class RegisterInIl2CppAttribute
     {
@@ -48,7 +48,7 @@ namespace NeuroSdk.Utilities.Il2Cpp
 
             foreach (Type type in assembly.GetTypes())
             {
-                RegisterInIl2CppAttribute attribute = type.GetCustomAttribute<RegisterInIl2CppAttribute>();
+                RegisterInIl2CppAttribute? attribute = type.GetCustomAttribute<RegisterInIl2CppAttribute>();
                 if (attribute != null)
                 {
                     RegisterType(type, attribute.Interfaces);

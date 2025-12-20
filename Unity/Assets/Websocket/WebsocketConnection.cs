@@ -5,16 +5,18 @@ using System.Collections;
 using System.Text;
 using System.Threading.Tasks;
 using NativeWebSocket;
+using NeuroSdk.Il2Cpp;
+using NeuroSdk.Internal;
 using NeuroSdk.Messages.API;
-using NeuroSdk.Utilities;
-using NeuroSdk.Utilities.Il2Cpp;
 using Newtonsoft.Json.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 
 namespace NeuroSdk.Websocket
 {
+#pragma warning disable CS0618 // Type or member is obsolete
     [RegisterInIl2Cpp]
+#pragma warning restore CS0618 // Type or member is obsolete
     public sealed class WebsocketConnection : MonoBehaviour
     {
         private const float RECONNECT_INTERVAL = 3;
@@ -35,7 +37,7 @@ namespace NeuroSdk.Websocket
 
         private static WebSocket? _socket;
 
-        public string game = null!;
+        public string game = "";
         public MessageQueue messageQueue = null!;
         public CommandHandler commandHandler = null!;
 
@@ -55,24 +57,28 @@ namespace NeuroSdk.Websocket
 
             DontDestroyOnLoad(gameObject);
             Instance = this;
+
+            Debug.Log("NeuroSdk WebsocketConnection is now awake");
         }
 
         // ReSharper disable once ArrangeThisQualifier -- Il2Cpp has this as an extension method
         private void Start() => this.StartCoroutine(StartWs());
 
+        [Il2CppHide]
         private IEnumerator Reconnect()
         {
-            yield return new WaitForSeconds(RECONNECT_INTERVAL);
+            yield return new WaitForSecondsRealtime(RECONNECT_INTERVAL);
             yield return StartWs();
         }
 
+        [Il2CppHide]
         private IEnumerator StartWs()
         {
             if (MainThreadUtil.Instance == null) MainThreadUtil.Setup();
 
             try
             {
-                if (_socket?.State is WebSocketState.Open or WebSocketState.Connecting) _socket.Close();
+                if (_socket?.State is WebSocketState.Open or WebSocketState.Connecting) _ = _socket.Close();
             }
             catch
             {
@@ -97,7 +103,18 @@ namespace NeuroSdk.Websocket
 
             // Websocket callbacks get run on separate threads! Watch out
             _socket = new WebSocket(websocketUrl);
-            _socket.OnOpen += () => onConnected?.Invoke();
+            _socket.OnOpen += () =>
+            {
+                // ReSharper disable once ArrangeThisQualifier -- Il2Cpp has this as an extension method
+                this.StartCoroutine(coroutine());
+                return;
+
+                IEnumerator coroutine()
+                {
+                    yield return null;
+                    onConnected?.Invoke();
+                }
+            };
             _socket.OnMessage += bytes =>
             {
                 string message = Encoding.UTF8.GetString(bytes);
@@ -106,21 +123,40 @@ namespace NeuroSdk.Websocket
             };
             _socket.OnError += error =>
             {
-                onError?.Invoke(error);
-                if (error != "Unable to connect to the remote server")
+                // ReSharper disable once ArrangeThisQualifier -- Il2Cpp has this as an extension method
+                this.StartCoroutine(coroutine());
+                return;
+
+                IEnumerator coroutine()
                 {
-                    Debug.LogError("Websocket connection has encountered an error!");
-                    Debug.LogError(error);
+                    yield return null;
+
+                    onError?.Invoke(error);
+                    if (error != "Unable to connect to the remote server")
+                    {
+                        Debug.LogError("Websocket connection has encountered an error!");
+                        Debug.LogError(error);
+                    }
                 }
             };
             _socket.OnClose += code =>
             {
-                onDisconnected?.Invoke(code);
-                if (code != WebSocketCloseCode.Abnormal) Debug.LogWarning($"Websocket connection has been closed with code {code}!");
                 // ReSharper disable once ArrangeThisQualifier -- Il2Cpp has this as an extension method
-                this.StartCoroutine(Reconnect());
+                this.StartCoroutine(coroutine());
+                return;
+
+                IEnumerator coroutine()
+                {
+                    yield return null;
+
+                    onDisconnected?.Invoke(code);
+                    if (code != WebSocketCloseCode.Abnormal) Debug.LogWarning($"Websocket connection has been closed with code {code}!");
+                    // ReSharper disable once ArrangeThisQualifier -- Il2Cpp has this as an extension method
+                    this.StartCoroutine(Reconnect());
+                }
             };
-            _socket.Connect();
+
+            _ = _socket.Connect();
         }
 
         private void Update()
@@ -139,6 +175,7 @@ namespace NeuroSdk.Websocket
 #endif
         }
 
+        [Il2CppHide]
         private IEnumerator SendTask(OutgoingMessageBuilder builder)
         {
             string message = Jason.Serialize(builder.GetWsMessage());
@@ -156,8 +193,10 @@ namespace NeuroSdk.Websocket
             }
         }
 
+        [Il2CppHide]
         public void Send(OutgoingMessageBuilder messageBuilder) => messageQueue.Enqueue(messageBuilder);
 
+        [Il2CppHide]
         public void SendImmediate(OutgoingMessageBuilder messageBuilder)
         {
             string message = Jason.Serialize(messageBuilder.GetWsMessage());
@@ -173,10 +212,14 @@ namespace NeuroSdk.Websocket
             _socket.SendText(message);
         }
 
+        [Il2CppHide]
         private IEnumerator ReceiveMessage(string msgData)
         {
+            yield return null;
+
             try
             {
+
                 Debug.Log("Received ws message " + msgData);
 
                 JObject message = JObject.Parse(msgData);

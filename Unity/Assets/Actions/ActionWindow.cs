@@ -3,8 +3,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using NeuroSdk.Il2Cpp;
+using NeuroSdk.Internal;
 using NeuroSdk.Messages.Outgoing;
-using NeuroSdk.Utilities.Il2Cpp;
 using NeuroSdk.Websocket;
 using UnityEngine;
 
@@ -13,7 +14,9 @@ namespace NeuroSdk.Actions
     /// <summary>
     /// A wrapper class around the concept of an action window, which handles sending context, registering actions, forcing actions and unregistering the actions afterwards.
     /// </summary>
+#pragma warning disable CS0618 // Type or member is obsolete
     [RegisterInIl2Cpp]
+#pragma warning restore CS0618 // Type or member is obsolete
     public sealed class ActionWindow : MonoBehaviour
     {
         #region Creation
@@ -125,6 +128,7 @@ namespace NeuroSdk.Actions
         /// Add a new action to the list of possible actions that Neuro can pick from
         /// </summary>
         /// <returns>The <see cref="ActionWindow"/> itself for chaining.</returns>
+        [Il2CppHide]
         public ActionWindow AddAction(INeuroAction action)
         {
             if (!ValidateFrozen()) return this;
@@ -172,6 +176,7 @@ namespace NeuroSdk.Actions
         /// <param name="ephemeralContext">If true, the query and state won't be remembered after the action force is finished.</param>
         /// <param name="priority">Priority of the action force, should be `low`, `medium`, `high`, or `critical`.</param>
         /// <returns>The <see cref="ActionWindow"/> itself for chaining.</returns>
+        [Il2CppHide]
         public ActionWindow SetForce(Func<bool> shouldForce, Func<string> queryGetter, Func<string?> stateGetter, bool ephemeralContext = false, string priority = "low")
         {
             if (!ValidateFrozen()) return this;
@@ -191,6 +196,7 @@ namespace NeuroSdk.Actions
         /// <param name="shouldForce">When this returns true, the actions will be forced.</param>
         /// <param name="ephemeralContext">If true, the query and state won't be remembered after the action force is finished.</param>
         /// <returns>The <see cref="ActionWindow"/> itself for chaining.</returns>
+        [Il2CppHide]
         public ActionWindow SetForce(Func<bool> shouldForce, string query, string? state, bool ephemeralContext = false, string priority = "low")
             => SetForce(shouldForce, () => query, () => state, ephemeralContext, priority);
 
@@ -201,6 +207,7 @@ namespace NeuroSdk.Actions
         /// <param name="stateGetter">A getter for the state of the action force, invoked at force-time.</param>
         /// <param name="ephemeralContext">If true, the query and state won't be remembered after the action force is finished.</param>
         /// <returns>The <see cref="ActionWindow"/> itself for chaining.</returns>
+        [Il2CppHide]
         public ActionWindow SetForce(float afterSeconds, Func<string> queryGetter, Func<string?> stateGetter, bool ephemeralContext = false, string priority = "low")
         {
             float time = afterSeconds;
@@ -243,6 +250,7 @@ namespace NeuroSdk.Actions
         /// </summary>
         /// <param name="shouldEnd">When this returns true, the actions will be unregistered.</param>
         /// <returns>The <see cref="ActionWindow"/> itself for chaining.</returns>
+        [Il2CppHide]
         public ActionWindow SetEnd(Func<bool> shouldEnd)
         {
             if (!ValidateFrozen()) return this;
@@ -290,20 +298,6 @@ namespace NeuroSdk.Actions
         #endregion
 
         #region Handling
-
-        /// <summary>
-        /// Run an <see cref="ExecutionResult"/> through this ActionWindow. This is invoked automatically in <see cref="NeuroAction"/>, but if you are not using that class you will need to invoke this manually.
-        /// </summary>
-        public ExecutionResult Result(ExecutionResult result)
-        {
-            if (CurrentState <= State.Building) throw new InvalidOperationException("Cannot handle a result before registering the ActionWindow.");
-            if (CurrentState >= State.Ended) throw new InvalidOperationException("Cannot handle a result after the ActionWindow has ended.");
-
-            if (result.Successful) End();
-            // else if (CurrentState == State.Forced) Force(); // Vedal is now responsible for retrying forces
-
-            return result;
-        }
 
         private void Update()
         {

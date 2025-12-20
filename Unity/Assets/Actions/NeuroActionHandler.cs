@@ -3,14 +3,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using NeuroSdk.Il2Cpp;
 using NeuroSdk.Messages.Outgoing;
-using NeuroSdk.Utilities.Il2Cpp;
 using NeuroSdk.Websocket;
 using UnityEngine;
 
 namespace NeuroSdk.Actions
 {
+#pragma warning disable CS0618 // Type or member is obsolete
     [RegisterInIl2Cpp]
+#pragma warning restore CS0618 // Type or member is obsolete
     public sealed class NeuroActionHandler : MonoBehaviour
     {
         private static List<INeuroAction> _currentlyRegisteredActions = new();
@@ -42,9 +44,10 @@ namespace NeuroSdk.Actions
 
             _currentlyRegisteredActions.RemoveAll(actionsToRemove.Contains);
             _dyingActions.AddRange(actionsToRemove);
-            WebsocketConnection.Instance!.StartCoroutine(removeActions());
 
-            WebsocketConnection.Instance.Send(new ActionsUnregister(removeActionsList));
+            WebsocketConnection connection = WebsocketConnection.Instance!;
+            connection.StartCoroutine(removeActions());
+            connection.Send(new ActionsUnregister(removeActionsList));
 
             return;
 

@@ -1,4 +1,5 @@
 ﻿// ReSharper disable all
+#nullable disable
 
 // Taken from Unity's source code, this is here to allow NativeWebSocket to work in Il2Cpp.
 

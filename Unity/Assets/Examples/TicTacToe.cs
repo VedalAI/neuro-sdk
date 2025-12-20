@@ -3,6 +3,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using NeuroSdk.Actions;
+using NeuroSdk.Internal;
 using NeuroSdk.Json;
 using NeuroSdk.Messages.Outgoing;
 using NeuroSdk.Websocket;
@@ -142,14 +143,14 @@ namespace NeuroSdk.Examples
             if (string.IsNullOrEmpty(desiredCell))
             {
                 cell = null;
-                return ExecutionResult.Failure(Strings.ActionFailedMissingRequiredParameter.Format("cell"));
+                return ExecutionResult.Failure(NeuroSdkStrings.ActionFailedMissingRequiredParameter.Format("cell"));
             }
 
             string[] cells = GetAvailableCells().ToArray();
             if (!cells.Contains(desiredCell))
             {
                 cell = null;
-                return ExecutionResult.Failure(Strings.ActionFailedInvalidParameter.Format("cell"));
+                return ExecutionResult.Failure(NeuroSdkStrings.ActionFailedInvalidParameter.Format("cell"));
             }
 
             cell = _ticTacToe.transform.Find(desiredCell)?.gameObject;

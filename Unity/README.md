@@ -34,10 +34,6 @@ Drag the `NeuroSdk` prefab into whatever scene you need to use it in. Ideally, i
 
 Call `NeuroSdkSetup.Initialize` with the name of the game that you are using. This will automatically create the necessary objects and set up the SDK. This is the only option you have if you are using the NeuroSdk in a modded environment, from a NuGet package.
 
-> [!Important]  
-> If using BepInEx, this function should be called in the `Start` method of your `BaseUnityPlugin`. Calling it from `Awake` is too early and will not work.
-> If you are in IL2CPP, you can call this function from a patch on a `Start` method from another `MonoBehaviour`.
-
 ### WebGL Additional Setup
 
 1. Go to `Project Settings > Player` and set `Compression Format` to `Gzip` and enable `Decompression Fallback`.
