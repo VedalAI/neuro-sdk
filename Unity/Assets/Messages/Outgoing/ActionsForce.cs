@@ -10,17 +10,44 @@ namespace NeuroSdk.Messages.Outgoing
 {
     public sealed class ActionsForce : OutgoingMessageBuilder
     {
-        public ActionsForce(string query, string? state, bool? ephemeralContext, IEnumerable<INeuroAction> actions, string priority = "low")
+        public enum Priority
+        {
+            /// <summary>
+            /// Neuro will finish speaking before responding.
+            /// </summary>
+            Low,
+            /// <summary>
+            /// Neuro will finish speaking before responding, but will finish her current utterance sooner.
+            /// </summary>
+            Medium,
+            /// <summary>
+            /// Neuro will process the action force immediately, shortening her utterance and responding right after.
+            /// </summary>
+            High,
+            /// <summary>
+            /// Neuro will be interrupted immediately to respond to the action force.
+            /// </summary>
+            Critical
+        }
+
+        public ActionsForce(string query, string? state, bool? ephemeralContext, Priority priority, IEnumerable<INeuroAction> actions)
         {
             _query = query;
             _state = state;
             _ephemeralContext = ephemeralContext;
             _actionNames = actions.Select(a => a.Name).ToArray();
-            _priority = priority;
+            _priority = priority switch
+            {
+                Priority.Low => "low",
+                Priority.Medium => "medium",
+                Priority.High => "high",
+                Priority.Critical => "critical",
+                _ => "low", // Shouldn't happen if enum is used correctly
+            };
         }
 
-        public ActionsForce(string query, string? state, bool? ephemeralContext, params INeuroAction[] actions, string priority = "low")
-            : this(query, state, ephemeralContext, (IEnumerable<INeuroAction>)actions, priority)
+        public ActionsForce(string query, string? state, bool? ephemeralContext, Priority priority, params INeuroAction[] actions)
+            : this(query, state, ephemeralContext, priority, (IEnumerable<INeuroAction>)actions)
         {
         }
 
@@ -38,7 +65,7 @@ namespace NeuroSdk.Messages.Outgoing
         [JsonProperty("action_names", Order = 30)]
         private readonly string[] _actionNames;
 
-        [JsonProperty("priority", order = 40)]
+        [JsonProperty("priority", Order = 40)]
         private readonly string _priority;
     }
 }
