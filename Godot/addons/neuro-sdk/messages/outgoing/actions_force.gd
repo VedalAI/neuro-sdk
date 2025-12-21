@@ -5,9 +5,23 @@ var _query: String
 var _state
 var _ephemeral_context: bool
 var _action_names: Array[String]
-var _priority: String
+var _priority: Priority
 
-func _init(query: String, state, ephemeral_context: bool, action_names: Array[String], priority: String = "low"):
+enum Priority {
+	LOW,
+	MEDIUM,
+	HIGH,
+	CRITICAL,
+}
+
+const _PRIORITY_MAP = {
+	Priority.LOW: "low",
+	Priority.MEDIUM: "medium",
+	Priority.HIGH: "high",
+	Priority.CRITICAL: "critical",
+}
+
+func _init(query: String, state, ephemeral_context: bool, action_names: Array[String], priority: Priority = Priority.LOW):
 	_query = query
 	_state = state
 	_ephemeral_context = ephemeral_context
@@ -23,5 +37,5 @@ func _get_data() -> Dictionary:
 		"query": _query,
 		"ephemeral_context": _ephemeral_context,
 		"action_names": _action_names,
-                "priority": priority,
+        "priority": _PRIORITY_MAP.get(_priority),
 	}
