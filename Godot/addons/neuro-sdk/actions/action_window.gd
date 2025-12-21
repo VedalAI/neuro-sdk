@@ -13,7 +13,7 @@ var _force_timeout: float
 var _action_force_query: String
 var _action_force_state: String
 var _action_force_ephemeral_context: bool
-var _action_force_priority: String
+var _action_force_priority: ActionsForce.Priority
 var _end_enabled: bool = false
 var _end_timeout: float
 var _actions: Array[NeuroAction] = []
@@ -25,7 +25,7 @@ var _timer: float = 0
 func _init(parent: Node):
 	parent.add_child(self)
 
-func set_force(timeout: float, query: String, state: String, ephemeral_context: bool = false, priority: String = "low") -> void:
+func set_force(timeout: float, query: String, state: String, ephemeral_context: bool = false, priority: ActionsForce.Priority = ActionsForce.Priority.LOW) -> void:
 	if !_validate_frozen():
 		return
 
