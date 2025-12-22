@@ -22,6 +22,7 @@ const _PRIORITY_MAP = {
 }
 
 func _init(query: String, state, ephemeral_context: bool, action_names: Array[String], priority: Priority = Priority.LOW):
+	assert(_PRIORITY_MAP.has(priority), "Invalid priority value: %s" % priority)
 	_query = query
 	_state = state
 	_ephemeral_context = ephemeral_context
