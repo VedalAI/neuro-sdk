@@ -8,6 +8,7 @@ const PlayOAction := preload("res://examples/play_o_action.gd")
 var _playerTurn := true
 
 func _ready() -> void:
+	NeuroSdkConfig.game = "Tic Tac Toe"
 	Context.send("A Tic Tac Toe game has started. You are playing as O.", true)
 
 	for child in container.get_children():
