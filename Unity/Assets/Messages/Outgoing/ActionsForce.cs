@@ -1,5 +1,6 @@
 ﻿#nullable enable
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using NeuroSdk.Actions;
@@ -32,18 +33,16 @@ namespace NeuroSdk.Messages.Outgoing
 
         public ActionsForce(string query, string? state, bool? ephemeralContext, Priority priority, IEnumerable<INeuroAction> actions)
         {
+            if (!Enum.IsDefined(typeof(Priority), priority))
+            {
+                throw new ArgumentOutOfRangeException(nameof(priority), "Invalid priority value.");
+            }
+            
             _query = query;
             _state = state;
             _ephemeralContext = ephemeralContext;
             _actionNames = actions.Select(a => a.Name).ToArray();
-            _priority = priority switch
-            {
-                Priority.Low => "low",
-                Priority.Medium => "medium",
-                Priority.High => "high",
-                Priority.Critical => "critical",
-                _ => "low", // Shouldn't happen if enum is used correctly
-            };
+            _priority = priority.ToString().ToLowerInvariant();
         }
 
         public ActionsForce(string query, string? state, bool? ephemeralContext, Priority priority, params INeuroAction[] actions)
