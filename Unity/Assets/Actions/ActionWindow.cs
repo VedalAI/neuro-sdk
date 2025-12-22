@@ -165,6 +165,7 @@ namespace NeuroSdk.Actions
         private Func<string>? _forceQueryGetter;
         private Func<string?>? _forceStateGetter;
         private bool? _forceEphemeralContext;
+        private ActionsForce.Priority? _forcePriority;
 
         /// <summary>
         /// Specify a condition under which the actions should be forced.
@@ -173,9 +174,10 @@ namespace NeuroSdk.Actions
         /// <param name="queryGetter">A getter for the query of the action force, invoked at force-time.</param>
         /// <param name="stateGetter">A getter for the state of the action force, invoked at force-time.</param>
         /// <param name="ephemeralContext">If true, the query and state won't be remembered after the action force is finished.</param>
+        /// <param name="priority">Priority of the action force. Defaults to low.</param>
         /// <returns>The <see cref="ActionWindow"/> itself for chaining.</returns>
         [Il2CppHide]
-        public ActionWindow SetForce(Func<bool> shouldForce, Func<string> queryGetter, Func<string?> stateGetter, bool ephemeralContext = false)
+        public ActionWindow SetForce(Func<bool> shouldForce, Func<string> queryGetter, Func<string?> stateGetter, bool ephemeralContext = false, ActionsForce.Priority priority = ActionsForce.Priority.Low)
         {
             if (!ValidateFrozen()) return this;
 
@@ -183,6 +185,7 @@ namespace NeuroSdk.Actions
             _forceQueryGetter = queryGetter;
             _forceStateGetter = stateGetter;
             _forceEphemeralContext = ephemeralContext;
+            _forcePriority = priority;
 
             return this;
         }
@@ -194,8 +197,8 @@ namespace NeuroSdk.Actions
         /// <param name="ephemeralContext">If true, the query and state won't be remembered after the action force is finished.</param>
         /// <returns>The <see cref="ActionWindow"/> itself for chaining.</returns>
         [Il2CppHide]
-        public ActionWindow SetForce(Func<bool> shouldForce, string query, string? state, bool ephemeralContext = false)
-            => SetForce(shouldForce, () => query, () => state, ephemeralContext);
+        public ActionWindow SetForce(Func<bool> shouldForce, string query, string? state, bool ephemeralContext = false, ActionsForce.Priority priority = ActionsForce.Priority.Low)
+            => SetForce(shouldForce, () => query, () => state, ephemeralContext, priority);
 
         /// <summary>
         /// Specify a time in seconds after which the actions should be forced.
@@ -205,11 +208,11 @@ namespace NeuroSdk.Actions
         /// <param name="ephemeralContext">If true, the query and state won't be remembered after the action force is finished.</param>
         /// <returns>The <see cref="ActionWindow"/> itself for chaining.</returns>
         [Il2CppHide]
-        public ActionWindow SetForce(float afterSeconds, Func<string> queryGetter, Func<string?> stateGetter, bool ephemeralContext = false)
+        public ActionWindow SetForce(float afterSeconds, Func<string> queryGetter, Func<string?> stateGetter, bool ephemeralContext = false, ActionsForce.Priority priority = ActionsForce.Priority.Low)
         {
             float time = afterSeconds;
 
-            return SetForce(shouldForce, queryGetter, stateGetter, ephemeralContext);
+            return SetForce(shouldForce, queryGetter, stateGetter, ephemeralContext, priority);
 
             bool shouldForce()
             {
@@ -224,8 +227,8 @@ namespace NeuroSdk.Actions
         /// </summary>
         /// <param name="ephemeralContext">If true, the query and state won't be remembered after the action force is finished.</param>
         /// <returns>The <see cref="ActionWindow"/> itself for chaining.</returns>
-        public ActionWindow SetForce(float afterSeconds, string query, string? state, bool ephemeralContext = false)
-            => SetForce(afterSeconds, () => query, () => state, ephemeralContext);
+        public ActionWindow SetForce(float afterSeconds, string query, string? state, bool ephemeralContext = false, ActionsForce.Priority priority = ActionsForce.Priority.Low)
+            => SetForce(afterSeconds, () => query, () => state, ephemeralContext, priority);
 
         public void Force()
         {
@@ -233,7 +236,7 @@ namespace NeuroSdk.Actions
 
             CurrentState = State.Forced;
             _shouldForceFunc = null;
-            WebsocketConnection.Instance!.Send(new ActionsForce(_forceQueryGetter!(), _forceStateGetter!(), _forceEphemeralContext, _actions));
+            WebsocketConnection.Instance!.Send(new ActionsForce(_forceQueryGetter!(), _forceStateGetter!(), _forceEphemeralContext, _forcePriority ?? ActionsForce.Priority.Low, _actions));
         }
 
         #endregion

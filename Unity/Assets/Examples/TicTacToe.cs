@@ -37,7 +37,7 @@ namespace NeuroSdk.Examples
             if (!CheckWin())
             {
                 ActionWindow.Create(gameObject)
-                    .SetForce(0, "It is your turn. Please place an O.", "", false)
+                    .SetForce(0, "It is your turn. Please place an O.", "", false, ActionsForce.Priority.Low)
                     .AddAction(new PlayOAction(this))
                     .Register();
             }
