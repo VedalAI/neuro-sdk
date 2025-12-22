@@ -27,7 +27,7 @@ func player_play_in_cell(cell: BaseButton) -> void:
 
 	if not check_win():
 		var actionWindow := ActionWindow.new(self)
-		actionWindow.set_force(0, "It is your turn. Please place an O.", "", false)
+		actionWindow.set_force(0, "It is your turn. Please place an O.", "", false, ActionsForce.Priority.LOW)
 		actionWindow.add_action(PlayOAction.new(actionWindow, self))
 		actionWindow.register()
 	else:
