@@ -38,7 +38,7 @@ namespace NeuroSdk.Json
         public static JsonSchema Const(IEnumerable<bool> values) => Const<IEnumerable<bool>>(values);
 
         public static JsonSchema ConstEmptyArray => Const(Array.Empty<object>());
-        public static JsonSchema ConstNull => Enum(new object?[] { null });
+        public static JsonSchema ConstNull => new JsonSchema.ConstNull();
 
         public static JsonSchema Enum(IEnumerable<string> values) => Enum<string>(values);
         public static JsonSchema Enum(IEnumerable<int> values) => Enum<int>(values);

@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 
 namespace NeuroSdk.Json
 {
-    public sealed class JsonSchema
+    public class JsonSchema
     {
         [JsonIgnore]
         public Dictionary<string, JsonSchema> Properties
@@ -76,7 +76,7 @@ namespace NeuroSdk.Json
         private List<object>? _enum;
 
         [JsonProperty("const")]
-        public object? Const { get; set; }
+        public virtual object? Const { get; set; }
 
         [JsonProperty("minLength")]
         public int? MinLength { get; set; }
@@ -115,5 +115,11 @@ namespace NeuroSdk.Json
         public string? Format { get; set; }
 
         #endregion
+        
+        internal sealed class ConstNull : JsonSchema
+        {
+            [JsonProperty("const", NullValueHandling = NullValueHandling.Include)]
+            public override object? Const { get; set; } = null;
+        }
     }
 }
