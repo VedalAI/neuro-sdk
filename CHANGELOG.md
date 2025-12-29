@@ -1,5 +1,16 @@
 # Changelog
 
+## 29th of December 2025, 19:20 GMT
+- Updated Unity SDK to 2.0.0:
+  - Added support for using the Neuro SDK with modded IL2CPP games.
+  - Dependency on UniTask has been removed, and all inheritable async methods have been replaced with synchronous versions. If you still need to perform asynchronous operations, you can start your own UniTask, or just use coroutines.
+  - Previously obsolete members have been removed, [check the pull request](https://github.com/VedalAI/neuro-sdk/pull/56) for a brief update guide.
+  - Implemented `priority` parameter for `ActionWindow.SetForce`
+
+## 22nd of December 2025, 22:00 GMT
+- Updated Godot SDK:
+  - Implemented `priority` parameter for `ActionWindow.set_force`
+
 ## 17th of December 2025, 15:00 GMT
 - Added `priority` to the `actions/force` message. This allows you to specify how urgently Neuro should respond to the action force when she is speaking. The default is `"low"`, which will cause Neuro to wait until she finishes speaking before responding. `"medium"` causes her to finish her current utterance sooner. `"high"` prompts her to process the action force immediately, shortening her utterance and then responding. `"critical"` will interrupt her speech and make her respond at once. Use `"critical"` with caution, as it may lead to abrupt and potentially jarring interruptions. The default behavior before this was added is identical to `"low"`.
 
