@@ -8,6 +8,7 @@ const PlayOAction := preload("res://examples/play_o_action.gd")
 var _playerTurn := true
 
 func _ready() -> void:
+	NeuroSdkConfig.game = "Tic Tac Toe"
 	Context.send("A Tic Tac Toe game has started. You are playing as O.", true)
 
 	for child in container.get_children():
@@ -27,7 +28,7 @@ func player_play_in_cell(cell: BaseButton) -> void:
 
 	if not check_win():
 		var actionWindow := ActionWindow.new(self)
-		actionWindow.set_force(0, "It is your turn. Please place an O.", "", false)
+		actionWindow.set_force(0, "It is your turn. Please place an O.", "", false, ActionsForce.Priority.LOW)
 		actionWindow.add_action(PlayOAction.new(actionWindow, self))
 		actionWindow.register()
 	else:
