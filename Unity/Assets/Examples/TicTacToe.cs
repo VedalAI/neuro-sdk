@@ -2,8 +2,6 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using Cysharp.Threading.Tasks;
-using JetBrains.Annotations;
 using NeuroSdk.Actions;
 using NeuroSdk.Json;
 using NeuroSdk.Messages.Outgoing;
@@ -25,7 +23,6 @@ namespace NeuroSdk.Examples
             Context.Send("A Tic Tac Toe game has started. You are playing as O.", true);
         }
 
-        [UsedImplicitly]
         public void PlayerPlayInCell(GameObject cell)
         {
             if (!_playerTurn) return;
@@ -39,7 +36,7 @@ namespace NeuroSdk.Examples
             if (!CheckWin())
             {
                 ActionWindow.Create(gameObject)
-                    .SetForce(0, "It is your turn. Please place an O.", "", false)
+                    .SetForce(0, "It is your turn. Please place an O.", "", false, ActionsForce.Priority.Low)
                     .AddAction(new PlayOAction(this))
                     .Register();
             }
@@ -101,7 +98,6 @@ namespace NeuroSdk.Examples
             resetButton.SetActive(true);
         }
 
-        [UsedImplicitly]
         public void ResetBoard()
         {
             resetButton.SetActive(false);
@@ -146,24 +142,23 @@ namespace NeuroSdk.Examples
             if (string.IsNullOrEmpty(desiredCell))
             {
                 cell = null;
-                return ExecutionResult.Failure(Strings.ActionFailedMissingRequiredParameter.Format("cell"));
+                return ExecutionResult.Failure(NeuroSdkStrings.ActionFailedMissingRequiredParameter.Format("cell"));
             }
 
             string[] cells = GetAvailableCells().ToArray();
             if (!cells.Contains(desiredCell))
             {
                 cell = null;
-                return ExecutionResult.Failure(Strings.ActionFailedInvalidParameter.Format("cell"));
+                return ExecutionResult.Failure(NeuroSdkStrings.ActionFailedInvalidParameter.Format("cell"));
             }
 
             cell = _ticTacToe.transform.Find(desiredCell)?.gameObject;
             return ExecutionResult.Success();
         }
 
-        protected override UniTask ExecuteAsync(GameObject? cell)
+        protected override void Execute(GameObject? cell)
         {
             _ticTacToe.BotPlayInCell(cell!);
-            return UniTask.CompletedTask;
         }
 
         private IEnumerable<string> GetAvailableCells()

@@ -1,18 +1,11 @@
 {
   "dependencies": {
-    "com.cysharp.unitask": {
-      "version": "https://github.com/Cysharp/UniTask.git?path=src/UniTask/Assets/Plugins/UniTask",
-      "depth": 0,
-      "source": "git",
-      "dependencies": {},
-      "hash": "f9fd769be7c634610f2a61aa914a1a55f34740e1"
-    },
     "com.endel.nativewebsocket": {
-      "version": "https://github.com/endel/NativeWebSocket.git#upm",
+      "version": "https://github.com/endel/NativeWebSocket.git?path=NativeWebSocket/Assets",
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "c5101c07762251edc82caad9e8a39d51b1229c31"
+      "hash": "4d64f5e7cc1efebec04e569a0378e38dc37a8f0d"
     },
     "com.unity.ext.nunit": {
       "version": "1.0.6",
@@ -22,7 +15,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.ide.rider": {
-      "version": "3.0.34",
+      "version": "3.0.38",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -31,11 +24,11 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.ide.visualstudio": {
-      "version": "2.0.22",
+      "version": "2.0.26",
       "depth": 0,
       "source": "registry",
       "dependencies": {
-        "com.unity.test-framework": "1.1.9"
+        "com.unity.test-framework": "1.1.33"
       },
       "url": "https://packages.unity.com"
     },
@@ -47,7 +40,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.nuget.newtonsoft-json": {
-      "version": "3.2.1",
+      "version": "3.2.2",
       "depth": 0,
       "source": "registry",
       "dependencies": {},
