@@ -1,7 +1,5 @@
 ﻿#nullable enable
 
-using NeuroSdk.Internal;
-
 namespace NeuroSdk.Websocket
 {
     public sealed class ExecutionResult

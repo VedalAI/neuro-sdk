@@ -1,6 +1,5 @@
 ﻿#nullable enable
 
-using System;
 using NeuroSdk.Websocket;
 
 namespace NeuroSdk.Actions

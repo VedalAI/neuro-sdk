@@ -1,6 +1,5 @@
 ﻿#nullable enable
 
-using System;
 using NeuroSdk.Json;
 using NeuroSdk.Websocket;
 using UnityEngine;

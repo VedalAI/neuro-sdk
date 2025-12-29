@@ -2,8 +2,7 @@
     "name": "NeuroSdk.Examples",
     "rootNamespace": "NeuroSdk",
     "references": [
-        "GUID:2fea756a1bd543946a401b107e3a5e95",
-        "GUID:f51ebe6a0ceec4240a699833d6309b23"
+        "GUID:2fea756a1bd543946a401b107e3a5e95"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
