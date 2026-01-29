@@ -1,6 +1,6 @@
 ﻿namespace NeuroSdk.Json.Builders
 {
-    public sealed class StringBuilder : SchemaBuilder
+    public sealed class StringBuilder : SchemaBuilder<object>
     {
         public StringBuilder()
         {
