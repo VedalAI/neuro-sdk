@@ -69,6 +69,8 @@ namespace NeuroSdk.Json
 
             return result;
         }
+
+        #region Validation
         
         /// <summary>
         /// Validate an object (POCO, Dictionary, etc.) against a JsonSchema
@@ -350,5 +352,7 @@ namespace NeuroSdk.Json
         {
             if (obj is not null) throw new Exception($"{path}: expected null");
         }
+        
+        #endregion
     }
 }
