@@ -100,16 +100,31 @@ namespace NeuroSdk.Actions
         public bool TryGetBool(string path, out bool value)
         {
             value = false;
-            if (TryGet(path, out bool? val))
-            {
-                value = val.GetValueOrDefault();
-                return true;
-            }
-            return false;
+            if (!TryGet(path, out bool? val)) return false;
+            
+            value = val.GetValueOrDefault();
+            return true;
         }
 
         public JObject? GetObject(string path) => Get<JObject>(path);
+        public bool TryGetObject(string path, out JObject? obj)
+        {
+            obj = null;
+            if (Data?.SelectToken(path) is not JObject token) return false;
+            
+            obj = token;
+            return true;
+        }
+        
         public JArray? GetArray(string path) => Get<JArray>(path);
+        public bool TryGetArray(string path, out JArray? array)
+        {
+            array = null;
+            if (Data?.SelectToken(path) is not JArray token) return false;
+            
+            array = token;
+            return true;
+        }
 
         public bool Contains(string path) => Data?.SelectToken(path) != null;
         public bool HasValue(string path) => Data?.SelectToken(path) is { Type: not JTokenType.Null };
