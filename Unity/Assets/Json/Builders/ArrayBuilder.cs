@@ -12,7 +12,7 @@ namespace NeuroSdk.Json.Builders
 
         public ArrayBuilder Items<TBuilder>(Func<JsonSchemaBuilders, SchemaBuilder<TBuilder>> build)
         {
-            Schema.Items = build(JsonSchemaBuilders.Instance).Build();
+            Schema.Items = build(new JsonSchemaBuilders()).Build();
             return this;
         }
 

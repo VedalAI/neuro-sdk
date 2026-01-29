@@ -1,10 +1,17 @@
 ﻿namespace NeuroSdk.Json.Builders
 {
-    public sealed class JsonSchemaBuilders
+    public interface IRootSchemaBuilders
     {
-        public static JsonSchemaBuilders Instance { get; } = new();
+        ObjectBuilder Object();
+        ArrayBuilder Array();
+    }
+    
+    public sealed class JsonSchemaBuilders : IRootSchemaBuilders
+    {
+        // singleton schizophrenia xd
+        public static IRootSchemaBuilders Instance { get; } = new JsonSchemaBuilders();
 
-        private JsonSchemaBuilders() {}
+        internal JsonSchemaBuilders() {}
 
         public ObjectBuilder Object() => new();
         public ArrayBuilder Array() => new();

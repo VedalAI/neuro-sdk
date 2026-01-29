@@ -66,6 +66,6 @@ namespace NeuroSdk.Json
             return result;
         }
 
-        public static JsonSchemaBuilders Builder => JsonSchemaBuilders.Instance;
+        public static IRootSchemaBuilders Builder => JsonSchemaBuilders.Instance;
     }
 }

@@ -16,7 +16,7 @@ namespace NeuroSdk.Json.Builders
             Func<JsonSchemaBuilders, SchemaBuilder<TBuilder>> build,
             bool required = true)
         {
-            var subBuilder = build(JsonSchemaBuilders.Instance);
+            var subBuilder = build(new JsonSchemaBuilders());
             Schema.Properties[name] = subBuilder.Build();
 
             if (required)
