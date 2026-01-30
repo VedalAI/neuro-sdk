@@ -12,28 +12,10 @@ namespace NeuroSdk.Json
     public class JsonSchemaValidator
     {
         /// <summary>
-        /// Validate an object (POCO, Dictionary, etc.) against a JsonSchema
+        /// Validate an ActionJData object against a JsonSchema
         /// Returns false and the error message if invalid
         /// </summary>
-        public static bool ValidateSafe(JsonSchema schema, ActionJData? obj, out string? message, string? path = "")
-        {
-            return ValidateSafe(schema, (object?)obj?.Data, out message, path);
-        }
-        
-        /// <summary>
-        /// Validate an object (POCO, Dictionary, etc.) against a JsonSchema
-        /// Returns false and the error message if invalid
-        /// </summary>
-        public static bool ValidateSafe(JsonSchema schema, JToken? obj, out string? message, string? path = "")
-        {
-            return ValidateSafe(schema, (object?)obj, out message, path);
-        }
-
-        /// <summary>
-        /// Validate an object (POCO, Dictionary, etc.) against a JsonSchema
-        /// Returns false and the error message if invalid
-        /// </summary>
-        public static bool ValidateSafe(JsonSchema schema, object? obj, out string? message, string? path = "")
+        public static bool ValidateSafe(JsonSchema schema, ActionJData? obj, out string? message)
         {
             try
             {
@@ -50,10 +32,55 @@ namespace NeuroSdk.Json
         }
         
         /// <summary>
+        /// Validate a JToken against a JsonSchema
+        /// Returns false and the error message if invalid
+        /// </summary>
+        public static bool ValidateSafe(JsonSchema schema, JToken? obj, out string? message)
+        {
+            try
+            {
+                Validate(schema, obj);
+            }
+            catch (Exception e)
+            {
+                message = e.Message;
+                return false;
+            }
+            
+            message = null;
+            return true;
+        }
+
+        /// <summary>
         /// Validate an object (POCO, Dictionary, etc.) against a JsonSchema
+        /// Returns false and the error message if invalid
+        /// </summary>
+        public static bool ValidateSafe(JsonSchema schema, object? obj, out string? message)
+        {
+            try
+            {
+                Validate(schema, obj);
+            }
+            catch (Exception e)
+            {
+                message = e.Message;
+                return false;
+            }
+            
+            message = null;
+            return true;
+        }
+
+        /// <summary>
+        /// Validate an ActionJData object against a JsonSchema
         /// Throws an exception if invalid
         /// </summary>
-        public static void Validate(JsonSchema schema, ActionJData? actionData, string path = "")
+        public static void Validate(JsonSchema schema, ActionJData? actionJData)
+        {
+            Validate(schema, actionJData, "");
+        }
+
+        private static void Validate(JsonSchema schema, ActionJData? actionData, string path)
         {
             if (actionData == null)
             {
@@ -62,31 +89,19 @@ namespace NeuroSdk.Json
             
             var token = actionData.Data;
             
-            if (token == null || token.Type == JTokenType.Null)
-            {
-                if (schema.Type == JsonSchemaType.Null || schema.Const == null) return;
-                throw new Exception($"{path}: value is null but schema does not allow null");
-            }
-
-            object? obj = token.Type switch
-            {
-                JTokenType.Object => token.ToObject<Dictionary<string, object>>()!,
-                JTokenType.Array => token.ToObject<List<object>>()!,
-                JTokenType.Integer => token.Value<long>(),
-                JTokenType.Float => token.Value<double>(),
-                JTokenType.Boolean => token.Value<bool>(),
-                JTokenType.String => token.Value<string>(),
-                _ => throw new Exception($"{path}: unsupported token type {token.Type}")
-            };
-
-            Validate(schema, obj, path);
+            Validate(schema, token, path);
         }
 
         /// <summary>
-        /// Validate an object (POCO, Dictionary, etc.) against a JsonSchema
+        /// Validate a JToken against a JsonSchema
         /// Throws an exception if invalid
         /// </summary>
-        public static void Validate(JsonSchema schema, JToken? token, string path = "")
+        public static void Validate(JsonSchema schema, JToken? token)
+        {
+            Validate(schema, token, "");
+        }
+        
+        private static void Validate(JsonSchema schema, JToken? token, string path)
         {
             if (token == null || token.Type == JTokenType.Null)
             {
@@ -94,16 +109,7 @@ namespace NeuroSdk.Json
                 throw new Exception($"{path}: value is null but schema does not allow null");
             }
 
-            object? obj = token.Type switch
-            {
-                JTokenType.Object => token.ToObject<Dictionary<string, object>>()!,
-                JTokenType.Array => token.ToObject<List<object>>()!,
-                JTokenType.Integer => token.Value<long>(),
-                JTokenType.Float => token.Value<double>(),
-                JTokenType.Boolean => token.Value<bool>(),
-                JTokenType.String => token.Value<string>(),
-                _ => throw new Exception($"{path}: unsupported token type {token.Type}")
-            };
+            var obj = UnwrapToken(token);
 
             Validate(schema, obj, path);
         }
@@ -112,7 +118,12 @@ namespace NeuroSdk.Json
         /// Validate an object (POCO, Dictionary, etc.) against a JsonSchema
         /// Throws an exception if invalid
         /// </summary>
-        public static void Validate(JsonSchema schema, object? obj, string path = "")
+        public static void Validate(JsonSchema schema, object? obj)
+        {
+            Validate(schema, obj, "");
+        }
+        
+        private static void Validate(JsonSchema schema, object? obj, string path)
         {
             if (schema == null) throw new ArgumentNullException(nameof(schema));
             if (obj == null)
@@ -122,6 +133,13 @@ namespace NeuroSdk.Json
                 if (schema.Type == JsonSchemaType.Null /* || schema.Const == null */) return;
                 throw new Exception($"{path}: value is null but schema does not allow null");
             }
+
+            if (schema.Const != null && !schema.Const.Equals(obj))
+                 throw new Exception($"{path}: value must be constant {schema.Const}");
+
+            if (schema.Enum is { Count: > 0 } && !schema.Enum.Contains(obj))
+                 throw new Exception($"{path}: value must be one of [{string.Join(", ", schema.Enum)}]");
+
 
             switch (schema.Type)
             {
@@ -151,13 +169,6 @@ namespace NeuroSdk.Json
                 default:
                     throw new ArgumentOutOfRangeException();
             }
-
-
-            if (schema.Const != null && !schema.Const.Equals(obj))
-                throw new Exception($"{path}: value must be constant {schema.Const}");
-            
-            if (schema.Enum != null && schema.Enum.Count > 0 && !schema.Enum.Contains(obj))
-                throw new Exception($"{path}: value must be one of [{string.Join(", ", schema.Enum)}]");
         }
 
         private static void ValidateString(JsonSchema schema, object obj, string path)
@@ -225,13 +236,9 @@ namespace NeuroSdk.Json
         private static void ValidateObject(JsonSchema schema, object obj, string path)
         {
             
-            if (obj is not IDictionary<string, object> dict)
-            {
-                if (obj is JObject jObj)
-                    dict = jObj.ToObject<Dictionary<string, object>>()!;
-                else
-                    throw new Exception($"{path}: expected object");
-            }
+            if (obj is not IDictionary<string, object?> dict)
+                throw new Exception($"{path}: expected object");
+
 
             foreach (var req in schema.Required.Where(req => !dict.ContainsKey(req)))
                 throw new Exception($"{MakePath(path, req)}: missing required property");
@@ -297,6 +304,37 @@ namespace NeuroSdk.Json
         private static void ValidateNull(object obj, string path)
         {
             if (obj is not null) throw new Exception($"{path}: expected null");
+        }
+        
+        private static object? UnwrapToken(JToken? token)
+        {
+            if (token == null || token.Type == JTokenType.Null)
+                return null;
+
+            return token.Type switch
+            {
+                JTokenType.Object => UnwrapJObject((JObject)token),
+                JTokenType.Array => UnwrapJArray((JArray)token),
+                JTokenType.Integer => token.Value<long>(),
+                JTokenType.Float => token.Value<double>(),
+                JTokenType.Boolean => token.Value<bool>(),
+                JTokenType.String => token.Value<string>(),
+                _ => throw new Exception($"Unsupported token type {token.Type}")
+            };
+        }
+
+        private static Dictionary<string, object?> UnwrapJObject(JObject jObj)
+        {
+            return jObj.Properties()
+                .ToDictionary(
+                    p => p.Name,
+                    p => UnwrapToken(p.Value)
+                );
+        }
+
+        private static List<object?> UnwrapJArray(JArray jArr)
+        {
+            return jArr.Select(UnwrapToken).ToList();
         }
     }
 }
