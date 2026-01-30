@@ -3,17 +3,12 @@ using System.Collections.Generic;
 
 namespace NeuroSdk.Json.Builders
 {
-    public sealed class ArrayBuilder : SchemaBuilder<IEnumerator<object>>
+    public sealed class ArrayBuilder : SchemaBuilder
     {
-        public ArrayBuilder()
+        public ArrayBuilder(Func<JsonSchemaBuilders, SchemaBuilder> build)
         {
             Schema.Type = JsonSchemaType.Array;
-        }
-
-        public ArrayBuilder Items<TBuilder>(Func<JsonSchemaBuilders, SchemaBuilder<TBuilder>> build)
-        {
             Schema.Items = build(new JsonSchemaBuilders()).Build();
-            return this;
         }
 
         public ArrayBuilder MinItems(int value)

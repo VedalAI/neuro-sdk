@@ -1,7 +1,7 @@
 ﻿namespace NeuroSdk.Json.Builders
 {
-    public abstract class NumberBuilder<TSelf> : SchemaBuilder<TSelf>
-        where TSelf : NumberBuilder<TSelf>
+    public abstract class NumberBuilder<TSelf, THolds> : PrimitiveBuilder<THolds>
+        where TSelf : NumberBuilder<TSelf, THolds>
     {
         protected TSelf Self => (TSelf)this;
 

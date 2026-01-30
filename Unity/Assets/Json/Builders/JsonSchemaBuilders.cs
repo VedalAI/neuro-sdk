@@ -1,9 +1,11 @@
-﻿namespace NeuroSdk.Json.Builders
+﻿using System;
+
+namespace NeuroSdk.Json.Builders
 {
     public interface IRootSchemaBuilders
     {
         ObjectBuilder Object();
-        ArrayBuilder Array();
+        ArrayBuilder Array(Func<JsonSchemaBuilders, SchemaBuilder> build);
     }
     
     public sealed class JsonSchemaBuilders : IRootSchemaBuilders
@@ -14,7 +16,7 @@
         internal JsonSchemaBuilders() {}
 
         public ObjectBuilder Object() => new();
-        public ArrayBuilder Array() => new();
+        public ArrayBuilder Array(Func<JsonSchemaBuilders, SchemaBuilder> build) => new(build);
         public StringBuilder String() => new();
         public IntegerBuilder Integer() => new();
         public FloatBuilder Float() => new();

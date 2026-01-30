@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace NeuroSdk.Json.Builders
 {
-    public sealed class ObjectBuilder : SchemaBuilder<object>
+    public sealed class ObjectBuilder : SchemaBuilder
     {
         public ObjectBuilder()
         {
@@ -11,9 +11,9 @@ namespace NeuroSdk.Json.Builders
             Schema.Properties = new Dictionary<string, JsonSchema>();
         }
 
-        public ObjectBuilder Property<TBuilder>(
+        public ObjectBuilder Property(
             string name,
-            Func<JsonSchemaBuilders, SchemaBuilder<TBuilder>> build,
+            Func<JsonSchemaBuilders, SchemaBuilder> build,
             bool required = true)
         {
             var subBuilder = build(new JsonSchemaBuilders());

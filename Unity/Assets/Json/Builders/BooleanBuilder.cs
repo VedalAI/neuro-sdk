@@ -1,6 +1,6 @@
 ﻿namespace NeuroSdk.Json.Builders
 {
-    public sealed class BooleanBuilder : SchemaBuilder<bool>
+    public sealed class BooleanBuilder : PrimitiveBuilder<bool>
     {
         public BooleanBuilder()
         {
