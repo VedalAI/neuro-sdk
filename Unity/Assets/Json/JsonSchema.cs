@@ -115,7 +115,7 @@ namespace NeuroSdk.Json
         public string? Format { get; set; }
         
         [JsonProperty("additionalProperties")]
-        public bool AllowAdditionalProperties { get; set; }
+        public bool AdditionalProperties { get; set; }
 
         #endregion
         
