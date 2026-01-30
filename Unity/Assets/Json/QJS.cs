@@ -62,7 +62,7 @@ namespace NeuroSdk.Json
             {
                 Type = JsonSchemaType.Object,
                 Properties = properties.ToDictionary(x => x.Key, x => x.Value),
-                AllowAdditionalProperties = allowAdditionalProperties
+                AdditionalProperties = allowAdditionalProperties
             };
 
             if (makePropertiesRequired) result.Required = properties.Keys.ToList();
