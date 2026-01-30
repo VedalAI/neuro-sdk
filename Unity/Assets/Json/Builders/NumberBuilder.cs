@@ -5,27 +5,27 @@
     {
         protected TSelf Self => (TSelf)this;
 
-        public TSelf Min(double value)
+        public TSelf Min(float value)
         {
-            Schema.Minimum = (float)value;
+            Schema.Minimum = value;
             return Self;
         }
 
-        public TSelf Max(double value)
+        public TSelf Max(float value)
         {
-            Schema.Maximum = (float)value;
+            Schema.Maximum = value;
             return Self;
         }
 
-        public TSelf ExclusiveMin(double value)
+        public TSelf ExclusiveMin(float value)
         {
-            Schema.ExclusiveMinimum = (float)value;
+            Schema.ExclusiveMinimum = value;
             return Self;
         }
 
-        public TSelf ExclusiveMax(double value)
+        public TSelf ExclusiveMax(float value)
         {
-            Schema.ExclusiveMaximum = (float)value;
+            Schema.ExclusiveMaximum = value;
             return Self;
         }
     }
