@@ -7,6 +7,12 @@
 
         internal bool IsOptional { get; private set; }
 
+        public TSelf Description(string description)
+        {
+            Schema.Description = description;
+            return Self;
+        }
+
         public TSelf Optional()
         {
             IsOptional = true;

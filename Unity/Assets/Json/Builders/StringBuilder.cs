@@ -1,4 +1,6 @@
-﻿namespace NeuroSdk.Json.Builders
+﻿using System.Text.RegularExpressions;
+
+namespace NeuroSdk.Json.Builders
 {
     public sealed class StringBuilder : PrimitiveBuilder<StringBuilder, string>
     {
@@ -22,6 +24,12 @@
         public StringBuilder Pattern(string regex)
         {
             Schema.Pattern = regex;
+            return this;
+        }
+
+        public StringBuilder Format(string format)
+        {
+            Schema.Format = format;
             return this;
         }
     }
