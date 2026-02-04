@@ -1,9 +1,21 @@
 ﻿namespace NeuroSdk.Json.Builders
 {
-    public class SchemaBuilder
+    public class SchemaBuilder<TSelf> where TSelf : SchemaBuilder<TSelf>
     {
         protected readonly JsonSchema Schema = new();
+        protected TSelf Self => (TSelf)this;
 
-        public JsonSchema Build() => Schema;
+        internal bool IsOptional { get; private set; }
+
+        public TSelf Optional()
+        {
+            IsOptional = true;
+            return Self;
+        }
+
+        public JsonSchema Build()
+        {
+            return Schema;
+        }
     }
 }

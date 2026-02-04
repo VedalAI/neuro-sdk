@@ -1,6 +1,6 @@
 ﻿namespace NeuroSdk.Json.Builders
 {
-    public sealed class NullBuilder : PrimitiveBuilder<object>
+    public sealed class NullBuilder : PrimitiveBuilder<NullBuilder, object>
     {
         public NullBuilder()
         {

@@ -2,18 +2,19 @@
 
 namespace NeuroSdk.Json.Builders
 {
-    public class PrimitiveBuilder<THolds> : SchemaBuilder
+    public class PrimitiveBuilder<TSelf, THolds> : SchemaBuilder<TSelf>
+        where TSelf : PrimitiveBuilder<TSelf, THolds>
     {
-        public PrimitiveBuilder<THolds> Const(THolds value)
+        public TSelf Const(THolds value)
         {
             Schema.Const = value;
-            return this;
+            return Self;
         }
 
-        public PrimitiveBuilder<THolds> Enum(params THolds[] values)
+        public TSelf Enum(params THolds[] values)
         {
             Schema.Enum = values.Cast<object>().ToList();
-            return this;
+            return Self;
         }
     }
 }
