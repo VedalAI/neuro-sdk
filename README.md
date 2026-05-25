@@ -60,11 +60,10 @@ The official SDKs have been created and optimized for turn-based games, namely I
 
 Games that require a non-low APM will generally not work well without Neuro only controlling the high-level actions and letting another system decide how to handle the low-level actions.
 
-Since you need to describe the entire game state in text, and receive actions in text, only games where that is feasible will work well with this API.
+Since you need to describe the entire game state in text, and receive actions in text, only games where that is feasible will work well with this API. Other games often require more complex solutions.
 <details>
-<summary>Examples</summary>
-
-Games that could work well
+<summary>Examples of games that work well</summary>
+  
 - Inscryption
 - Liar's Bar
 - Buckshot Roulette
@@ -72,16 +71,5 @@ Games that could work well
 - Uno
 - Monopoly
 - Most visual novels
-- Most card games
-
-Games that would probably not work well
-- Skyrim (solo)
-- League of Legends
-- Celeste
-- Euro Truck Sim
-- CSGO
-- Any real-time strategy game
-- Shooters
-- Platformers
-
+- Most turn based card games
 </details>
