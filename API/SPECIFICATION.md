@@ -189,6 +189,28 @@ This message needs to be sent as soon as possible after an action is validated, 
 
 ## Incoming Messages (S2C, Neuro to Game)
 
+### Startup Acknowledgement
+
+This message may be sent by Neuro in response to the game's `startup` message. It tells the game which character the websocket has been connected to.
+
+```ts
+{
+    "command": "startup",
+    "data": {
+        "session": {
+            "sessionId": string,
+            "characterId": string,
+            "displayName": string
+        }
+    }
+}
+```
+
+#### Parameters
+- `sessionId`: The server's websocket session identifier. Treat this as an opaque routing/debug value.
+- `characterId`: The stable character identifier, e.g. `"neuro"`.
+- `displayName`: The human-readable character name.
+
 ### Action
 
 This message is sent by Neuro when she tries to execute an action. You should respond to it with an action result as soon as possible.

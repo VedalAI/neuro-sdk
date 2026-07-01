@@ -6,6 +6,10 @@ There is an example of a Tic Tac Toe game implemented with the Neuro API, which 
 
 For sending context messages, you can use the `Context.send(message: String, silent: bool)` function. 
 
+## Reading Character Metadata
+
+After the websocket startup acknowledgement arrives, the `Websocket` autoload exposes `character_id` and `character_display_name`. You can also connect to the `Websocket.character_changed` signal if you need to react when that metadata becomes available.
+
 ## Creating Custom Actions
 
 In order to create a custom action, you need to extend the `NeuroAction` class.

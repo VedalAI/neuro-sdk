@@ -6,6 +6,10 @@ There is an example of a Tic Tac Toe game implemented with the Neuro API, which 
 
 For sending context messages, you can use the `static void Context.Send(string message, bool silent)` method.
 
+## Reading Character Metadata
+
+After the websocket startup acknowledgement arrives, `WebsocketConnection.Instance.Character` contains the connected character's `CharacterId` and `DisplayName`. You can also listen to `WebsocketConnection.onCharacterChanged` if you need to react when that metadata becomes available.
+
 ## Creating Custom Actions
 
 In order to create a custom action, you can extend either the `NeuroAction` or `NeuroAction<T>` class. The difference is explained below.

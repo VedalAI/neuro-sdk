@@ -4,6 +4,7 @@ extends Node
 signal connected
 signal connection_failed(error: Error)
 signal disconnected(code: int)
+signal character_changed(character_id: String, display_name: String)
 
 const POLL_INTERVAL := 1.0 / 30.0
 const RECONNECT_INTERVAL := 3.0
@@ -14,6 +15,8 @@ var _command_handler: CommandHandler
 
 var _elapsed_time := 0.0
 var websocket_is_connected: bool = false
+var character_id: String = ""
+var character_display_name: String = ""
 
 
 func _enter_tree() -> void:
@@ -121,6 +124,12 @@ func _ws_write() -> void:
 
 func send(message: OutgoingMessage) -> void:
 	_message_queue.enqueue(message)
+
+
+func set_character_metadata(new_character_id: String, new_display_name: String) -> void:
+	character_id = new_character_id
+	character_display_name = new_display_name if new_display_name != "" else new_character_id
+	character_changed.emit(character_id, character_display_name)
 
 
 func send_immediate(message: OutgoingMessage) -> void:
