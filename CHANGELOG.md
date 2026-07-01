@@ -1,5 +1,9 @@
 # Changelog
 
+## 1st of July 2026, 12:45 GMT
+- Added a `startup` acknowledgement from Neuro to game clients with connected session metadata.
+- Updated the Unity and Godot SDKs to expose connected character metadata (`characterId` and `displayName`) from the startup acknowledgement.
+
 ## 29th of December 2025, 19:20 GMT
 - Updated Unity SDK to 2.0.0:
   - Added support for using the Neuro SDK with modded IL2CPP games.
