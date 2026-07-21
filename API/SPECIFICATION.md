@@ -208,8 +208,8 @@ This message may be sent by Neuro in response to the game's `startup` message. I
 
 #### Parameters
 - `sessionId`: The server's websocket session identifier. Treat this as an opaque routing/debug value.
-- `characterId`: The stable character identifier, e.g. `"neuro"`.
-- `displayName`: The human-readable character name.
+- `characterId`: The stable character identifier. This is `neuro` for Neuro-sama or `evil` for Evil Neuro.
+- `displayName`: The human-readable character name. They are set to `Neuro-sama` and `Evil Neuro`, for the respective twin.
 
 ### Action
 
