@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using NeuroSdk.Json.Builders;
 
 namespace NeuroSdk.Json
 {
@@ -64,5 +65,7 @@ namespace NeuroSdk.Json
 
             return result;
         }
+
+        public static IRootSchemaBuilders Builder => JsonSchemaBuilders.Instance;
     }
 }
