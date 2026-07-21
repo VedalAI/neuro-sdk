@@ -52,12 +52,13 @@ namespace NeuroSdk.Json
             };
         }
 
-        public static JsonSchema WrapObject(IReadOnlyDictionary<string, JsonSchema> properties, bool makePropertiesRequired = true)
+        public static JsonSchema WrapObject(IReadOnlyDictionary<string, JsonSchema> properties, bool makePropertiesRequired = true, bool allowAdditionalProperties = true)
         {
             JsonSchema result = new()
             {
                 Type = JsonSchemaType.Object,
-                Properties = properties.ToDictionary(x => x.Key, x => x.Value)
+                Properties = properties.ToDictionary(x => x.Key, x => x.Value),
+                AdditionalProperties = allowAdditionalProperties
             };
 
             if (makePropertiesRequired) result.Required = properties.Keys.ToList();
