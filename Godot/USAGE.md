@@ -10,6 +10,10 @@ For sending context messages, you can use the `Context.send(message: String, sil
 
 After the websocket startup acknowledgement arrives, the `Websocket` autoload exposes `character_id` and `character_display_name`. You can also connect to the `Websocket.character_changed` signal if you need to react when that metadata becomes available.
 
+## Handling Speaking State
+
+Once a `speech_finished` message has been sent, the `Websocket` autoload sets `is_final`, `speech_cancelled` and `speech_reason`. You can also connect to `Websocket.speech_finished` to react to messages as they are sent. If you need active monitoring of the state, this is the recommended approach, as multiple messages can be sent during a single response.
+
 ## Voice Chat
 
 If your game has built-in voice chat, you can optionally use the `NeuroVoiceChat` node to let Neuro hear and talk to the other players through it. See the [voice chat API documentation](../API/VOICE_CHAT.md) for how the underlying protocol works and what is expected of your integration.

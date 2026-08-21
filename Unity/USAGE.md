@@ -10,6 +10,11 @@ For sending context messages, you can use the `static void Context.Send(string m
 
 After the websocket startup acknowledgement arrives, `WebsocketConnection.Instance.Character` contains the connected character's `CharacterId` and `DisplayName`. You can also listen to `WebsocketConnection.onCharacterChanged` if you need to react when that metadata becomes available.
 
+## Handling Speaking State
+
+Once a `speech_finished` message has been sent, `WebsocketConnection.Instance.SpeechFinished` will contain the result of the message. You can also listen to 
+`WebsocketConnection.onSpeechFinished` to react to the messages as they are sent. This is the recommended approach as multiple messages can be sent during a single response.
+
 ## Voice Chat
 
 If your game has built-in voice chat, you can optionally use `NeuroSdk.Voice.NeuroVoiceChat` to let Neuro hear and talk to the other players through it. See the [voice chat API documentation](../API/VOICE_CHAT.md) for how the underlying protocol works and what is expected of your integration.

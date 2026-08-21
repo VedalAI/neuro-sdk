@@ -5,6 +5,7 @@ signal connected
 signal connection_failed(error: Error)
 signal disconnected(code: int)
 signal character_changed(character_id: String, display_name: String)
+signal speech_finished(is_final: bool, cancelled: bool, reason: String)
 
 const POLL_INTERVAL := 1.0 / 30.0
 const RECONNECT_INTERVAL := 3.0
@@ -17,6 +18,9 @@ var _elapsed_time := 0.0
 var websocket_is_connected: bool = false
 var character_id: String = ""
 var character_display_name: String = ""
+var is_final: bool = false
+var speech_cancelled: bool = false
+var speech_reason: String = ""
 
 
 func _enter_tree() -> void:
@@ -130,6 +134,14 @@ func set_character_metadata(new_character_id: String, new_display_name: String) 
 	character_id = new_character_id
 	character_display_name = new_display_name if new_display_name != "" else new_character_id
 	character_changed.emit(character_id, character_display_name)
+
+
+func set_speech_finished(new_final: bool, new_cancelled: bool, new_reason: String) -> void:
+	is_final = new_final
+	speech_cancelled = new_cancelled
+	speech_reason = new_reason
+	if is_final:
+		speech_finished.emit(is_final, speech_cancelled, speech_reason)
 
 
 func send_immediate(message: OutgoingMessage) -> void:

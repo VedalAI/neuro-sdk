@@ -26,6 +26,20 @@ namespace NeuroSdk.Websocket
         public string DisplayName { get; }
     }
 
+    public sealed class SpeechFinishedResult
+    {
+        public SpeechFinishedResult(bool isFinal, bool? cancelled, string? reason)
+        {
+            IsFinal = isFinal;
+            Cancelled = cancelled;
+            Reason = reason;
+        }
+        
+        public bool IsFinal { get; }
+        public bool? Cancelled { get; }
+        public string? Reason { get; }
+    }
+
 #pragma warning disable CS0618 // Type or member is obsolete
     [RegisterInIl2Cpp]
 #pragma warning restore CS0618 // Type or member is obsolete
@@ -53,11 +67,13 @@ namespace NeuroSdk.Websocket
         public MessageQueue messageQueue = null!;
         public CommandHandler commandHandler = null!;
         public CharacterMetadata? Character { get; private set; }
+        public SpeechFinishedResult? SpeechFinished { get; private set; }
 
         public UnityEvent? onConnected;
         public UnityEvent<string>? onError;
         public UnityEvent<WebSocketCloseCode>? onDisconnected;
         public UnityEvent<CharacterMetadata>? onCharacterChanged;
+        public UnityEvent<SpeechFinishedResult>? onSpeechFinished;
 
         private void Awake()
         {
@@ -215,6 +231,16 @@ namespace NeuroSdk.Websocket
         {
             Character = metadata;
             onCharacterChanged?.Invoke(metadata);
+        }
+
+        [Il2CppHide]
+        public void SetSpeechFinished(SpeechFinishedResult result)
+        {
+            SpeechFinished = result;
+            if (SpeechFinished.IsFinal)
+            {
+                onSpeechFinished?.Invoke(result);
+            }
         }
 
         [Il2CppHide]
