@@ -1,3 +1,4 @@
+@abstract
 class_name NeuroAction
 
 var _action_window: ActionWindow
@@ -22,24 +23,20 @@ func execute(state: Dictionary) -> void:
 func get_ws_action() -> WsAction:
 	return WsAction.new(_get_name(), _get_description(), _get_schema())
 
-func _get_name() -> String:
-	push_error("Action._get_name() is not implemented.")
-	return ""
-
-func _get_description() -> String:
-	push_error("Action._get_description() is not implemented.")
-	return ""
-
-func _get_schema() -> Dictionary:
-	push_error("Action._get_schema() is not implemented.")
-	return {}
-
 func _can_be_used() -> bool:
 	return true
 
-func _validate_action(_data: IncomingData, _state: Dictionary) -> ExecutionResult:
-	push_error("Action._validate_action() is not implemented.")
-	return ExecutionResult.mod_failure("Action._validate_action() is not implemented.")
+@abstract
+func _get_name() -> String
 
-func _execute_action(_state: Dictionary) -> void:
-	push_error("Action._execute_action() is not implemented.")
+@abstract
+func _get_description() -> String
+
+@abstract
+func _get_schema() -> Dictionary
+
+@abstract
+func _validate_action(_data: IncomingData, _state: Dictionary) -> ExecutionResult
+
+@abstract
+func _execute_action(_state: Dictionary) -> void

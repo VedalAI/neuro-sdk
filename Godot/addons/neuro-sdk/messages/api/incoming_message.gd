@@ -1,3 +1,4 @@
+@abstract
 class_name IncomingMessage
 extends Node
 
@@ -18,16 +19,14 @@ func report_result(state: Dictionary, result: ExecutionResult) -> void:
 func execute(state: Dictionary) -> void:
 	_execute(state)
 
-func _can_handle(_command: String) -> bool:
-	push_error("IncomingMessage._can_handle() is not implemented.")
-	return false
+@abstract
+func _can_handle(_command: String) -> bool
 
-func _validate(_command: String, _data: IncomingData, _state: Dictionary) -> ExecutionResult:
-	push_error("IncomingMessage._validate() is not implemented.")
-	return ExecutionResult.mod_failure("IncomingMessage.validate() is not implemented.")
+@abstract
+func _validate(_command: String, _data: IncomingData, _state: Dictionary) -> ExecutionResult
 
-func _report_result(_state: Dictionary, _result: ExecutionResult) -> void:
-	push_error("IncomingMessage._report_result() is not implemented.")
+@abstract
+func _report_result(_state: Dictionary, _result: ExecutionResult) -> void
 
-func _execute(_state: Dictionary) -> void:
-	push_error("IncomingMessage._execute() is not implemented.")
+@abstract
+func _execute(_state: Dictionary) -> void

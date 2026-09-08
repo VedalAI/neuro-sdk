@@ -1,9 +1,8 @@
+@abstract
 class_name OutgoingMessage
 
-
-func _get_command() -> String:
-	push_error("OutgoingMessage._get_command() is not implemented.")
-	return "invalid"
+@abstract
+func _get_command() -> String
 
 
 func _get_data() -> Dictionary:
