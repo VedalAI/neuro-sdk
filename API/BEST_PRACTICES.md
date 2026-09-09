@@ -13,7 +13,7 @@ Answers to common questions about making an integration that Neuro plays well wi
 
 - Neuro sees the `name`, `description` and `schema` of registered actions exactly as you send them. Use descriptive names (`use_item`, not `action_3`), because she reads them. She always knows which actions are currently registered, so a "list my actions" action is unnecessary.
 - Keep descriptions to a sentence or two. Longer rules belong in context messages.
-- Keep your set of registered actions stable. Register everything you can once at startup, and avoid rapidly registering and unregistering actions: frequent changes to the action set slow down her responses, which matters a lot if you want her gameplay to be fast.
+- Keep your set of registered actions stable. Register actions relevant throughout normal gameplay at startup, even if they are temporarily unusable. Register mode-specific actions when entering that mode and unregister them when leaving it. Avoid rapidly registering and unregistering actions: frequent changes to the action set slow down her responses, which matters a lot if you want her gameplay to be fast.
 - Multiple similar actions vs. one parameterized action: both work.
   - Use separate actions for genuinely different verbs (`move`, `attack`, `end_turn`).
   - Use one action with an `enum` parameter for a fixed set of homogeneous choices (doors, colors, difficulty levels). She cannot forget the valid options, since they are part of the schema.
