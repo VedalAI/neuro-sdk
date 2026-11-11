@@ -6,6 +6,18 @@ There is an example of a Tic Tac Toe game implemented with the Neuro API, which 
 
 For sending context messages, you can use the `Context.send(message: String, silent: bool)` function. 
 
+## Reporting In-Game Dialogue
+
+When a line of in-game dialogue is spoken out loud (an NPC, a narrator, a cutscene), report it with `SpeechStarted` and `SpeechEnded` instead of a context message, so that Neuro hears the line and does not talk over it. See the [API specification](../API/SPECIFICATION.md#speech-started) for what each parameter does.
+
+```gdscript
+# When the line starts (its subtitle appears). Everything except the speaker is optional.
+var line_id := SpeechStarted.send("Shadowheart", "You're awake. Good.", 4200, SpeechStarted.Reply.MAYBE)
+
+# When the line stops, including when it is skipped:
+SpeechEnded.send(line_id)
+```
+
 ## Reading Character Metadata
 
 After the websocket startup acknowledgement arrives, the `Websocket` autoload exposes `character_id` and `character_display_name`. You can also connect to the `Websocket.character_changed` signal if you need to react when that metadata becomes available.

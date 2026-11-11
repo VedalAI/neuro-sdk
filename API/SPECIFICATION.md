@@ -95,6 +95,54 @@ This message can be sent to let Neuro know about something that is happening in 
 - `message`: A plaintext message that describes what is happening in the game. **This information will be directly received by Neuro.**
 - `silent`: If `true`, the message will be added to Neuro's context without prompting her to respond to it. If `false`, Neuro _might_ respond to the message directly, unless she is busy talking to someone else or to chat.
 
+### Speech Started
+
+This message tells Neuro that a line of in-game dialogue (an NPC, a narrator, a cutscene) has started being spoken out loud. She treats it like someone talking in a voice call: while the line is playing she will not start talking, and if she was in the middle of a response she stops shortly after instead of talking over it. No audio is involved.
+
+```ts
+{
+    "command": "speech/started",
+    "game": string,
+    "data": {
+        "id": string,
+        "speaker": string,
+        "text": string?,
+        "expected_duration_ms": number?,
+        "reply": "never" | "maybe" | "always", // Defaults to "maybe"
+        "responder": string?
+    }
+}
+```
+
+#### Parameters
+- `id`: An identifier for this line, chosen by the game (at most 256 characters). You will send it again in the matching `speech/ended` message. Use a new id every time a line is spoken: once a line has ended, a later `speech/started` with the same id is ignored. If several connections report the same line (e.g. one game process per character), they should all use the same id so that the line only counts once.
+- `speaker`: The name of whoever is speaking (at most 200 characters). **This information will be directly received by Neuro.**
+- `text`: What is being said (at most 4000 characters). If provided, Neuro hears it as the speaker saying it, so you should not also send the line as a `context` message. If omitted, she only knows that the speaker was talking. **This information will be directly received by Neuro.**
+- `expected_duration_ms`: How long the line is expected to take, as a whole number of milliseconds (at most 600000). This is only a safety net for when `speech/ended` never arrives: the line is then considered ended shortly after this duration, or after about 30 seconds if you did not provide one.
+- `reply`: What Neuro should do once the dialogue has gone quiet. `"never"` means she is not prompted to respond. `"maybe"` means she _might_ comment on it, like she might with a non-silent context message. `"always"` means she will respond to it. If another line starts right after one ends, they count as one stretch of dialogue and only the `reply` of the last line is used.
+- `responder`: Only used with `"always"`, and only matters if more than one character is listening to the dialogue. The `characterId` (see the [startup acknowledgement](#startup-acknowledgement)) of the character that should respond. If omitted, one of them is picked for you.
+
+> [!Note]
+> Action forces are not affected by dialogue: an `actions/force` sent while a line is playing is still handled.
+> If the connection closes while a line is open, the line ends without a reply.
+
+### Speech Ended
+
+This message tells Neuro that a line previously reported with `speech/started` has stopped, either because it finished or because it was skipped.
+
+```ts
+{
+    "command": "speech/ended",
+    "game": string,
+    "data": {
+        "id": string
+    }
+}
+```
+
+#### Parameters
+- `id`: The id of the line that ended, as sent in `speech/started`.
+
 ### Register Actions
 
 This message registers one or more actions for Neuro to use.
@@ -148,6 +196,7 @@ This message forces Neuro to execute one of the listed actions as soon as possib
         "query": string,
         "ephemeral_context": boolean?, // Defaults to false
         "priority": "low" | "medium" | "high" | "critical", // Defaults to "low"
+        "silent": boolean?, // Defaults to false
         "action_names": string[]
     }
 }
@@ -158,6 +207,7 @@ This message forces Neuro to execute one of the listed actions as soon as possib
 - `query`: A plaintext message that tells Neuro what she is currently supposed to be doing (e.g. `"It is now your turn. Please perform an action. If you want to use any items, you should use them before picking up the shotgun."`). **This information will be directly received by Neuro.**
 - `ephemeral_context`: If `false`, the context provided in the `state` and `query` parameters will be remembered by Neuro after the actions force is completed. If `true`, Neuro will only remember it for the duration of the actions force.
 - `priority`: Determines how urgently Neuro should respond to the action force when she is speaking. If Neuro is not speaking, this setting has no effect. The default is `"low"`, which will cause Neuro to wait until she finishes speaking before responding. `"medium"` causes her to finish her current utterance sooner. `"high"` prompts her to process the action force immediately, shortening her utterance and then responding. `"critical"` will interrupt her speech and make her respond at once. Use `"critical"` with caution, as it may lead to abrupt and potentially jarring interruptions.
+- `silent`: If `true`, Neuro picks an action without saying anything out loud about it. Failed actions are still retried as usual, and `priority` still applies.
 - `action_names`: The names of the actions that Neuro should choose from.
 <!-- - `main_thread: bool?`: Same as above. -->
 

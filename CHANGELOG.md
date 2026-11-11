@@ -1,5 +1,10 @@
 # Changelog
 
+## 10th of November 2026
+- Added the `speech/started` and `speech/ended` messages to the [API specification](./API/SPECIFICATION.md#speech-started). Games can use them to report in-game dialogue that is being spoken out loud, so that Neuro hears the line and does not talk over it. Guidance on using them has been added to [`BEST_PRACTICES.md`](./API/BEST_PRACTICES.md#in-game-dialogue).
+- Added `SpeechStarted` and `SpeechEnded` messages to the Unity and Godot SDKs.
+- Documented the `silent` parameter of the `actions/force` message. When `true`, Neuro picks an action without saying anything out loud about it. The default is `false`.
+
 ## 21st of August 2026
 - Updated the action result guidance in [`BEST_PRACTICES.md`](./API/BEST_PRACTICES.md): successful results should include a `message` describing any state that changed as a result of her action that would be helpful for her to know, rather than omitting messages by default.
 - Documented the server-side timeout on `action/result`: after about 20 seconds the action is treated as failed and late results are discarded.

@@ -9,6 +9,14 @@ Answers to common questions about making an integration that Neuro plays well wi
 - Long explanations (game rules, controls) are fine to send once at startup and repeat at key moments (new level, first encounter). For information she needs to act on right now, prefer the `state` field of an actions force.
 - It is safe to send context while an action result is still pending. The server holds it and delivers it in order once the result arrives. Still, send the result first when you can.
 
+## In-Game Dialogue
+
+- Report dialogue that is spoken out loud (voiced lines, cutscenes, narration) with `speech/started` and `speech/ended` instead of `context`. Context only tells her what was said; the speech messages also keep her from talking over it.
+- Send `speech/started` when the line starts (when its subtitle appears) and `speech/ended` when it stops, including when the player skips it. Always send the end, and include `expected_duration_ms` when you know it.
+- Pick `reply` per line: `never` for ambient chatter and barks she shouldn't react to, the default `maybe` for ordinary dialogue, and `always` when a character addresses her directly.
+- If the game is blocked on her answer (a dialogue choice), still use `actions/force`. `reply` only controls whether she talks about the line.
+- This is for the game's own dialogue. Other players talking in the game's voice chat belong to the [voice chat API](./VOICE_CHAT.md).
+
 ## Actions
 
 - Neuro sees the `name`, `description` and `schema` of registered actions exactly as you send them. Use descriptive names (`use_item`, not `action_3`), because she reads them. She always knows which actions are currently registered, so a "list my actions" action is unnecessary.
@@ -25,7 +33,7 @@ Answers to common questions about making an integration that Neuro plays well wi
 ## Action Results
 
 - Send the result as soon as you have _validated_ the action, before executing it in-game. Every second of delay is a second Neuro spends frozen waiting.
-- If no result arrives within a short window (currently around 20 seconds), the server treats the action as failed on its own and discards any late result. Do not rely on this; always answer.
+- If no result arrives within a short window (currently around 20 seconds), the server gives up: the action is reported to her as failed with a timeout error, the force (if there was one) is dropped rather than retried, and any late result is discarded. Do not rely on this; always answer.
 - A `success: false` result during an actions force is automatically retried (a limited number of times). Write the `message` as an actionable error, e.g. `"You can't discard a card that isn't in your hand. Your hand is: ..."`, so the retry can actually succeed.
 - Outside of a force there is no automatic retry: she reads the failure message and decides for herself whether to try again.
 - On success, use the `message` to describe any state that changed as a result of her action that would be helpful for her to know (e.g. the card she drew, the new board state). If nothing meaningful changed, omit it.
@@ -37,6 +45,7 @@ Answers to common questions about making an integration that Neuro plays well wi
 - `priority` guidance: keep the default `low` for turn-based games, since it never interrupts her. Use `medium`/`high` when the game state is time-sensitive and waiting through a long monologue would hurt. Reserve `critical` for hard real-time moments (a quick time event about to expire), since it cuts her off mid-sentence.
 - `state` and `query` are passed to her verbatim, so any format works; Markdown is recommended because it reads as prose. Indentation of embedded JSON doesn't matter.
 - Set `ephemeral_context: true` when you re-send bulky state every turn, so each dump is only visible for that decision instead of being remembered forever.
+- Set `silent: true` for frequent or routine decisions that aren't worth commenting on, so she acts without talking about every one of them.
 - Chained forces (pick card, then pick target, then pick discards) work and she understands them, but each link adds a full response round-trip. If an action only needs two or three parameters, prefer one action with a slightly bigger schema.
 
 ## Disconnecting and Reconnecting
