@@ -32,7 +32,7 @@ namespace NeuroSdk.Messages.Incoming
                 return ExecutionResult.VedalFailure(NeuroSdkStrings.ActionFailedNoData);
             }
 
-            string? id = messageData.GetValue<string>("id");
+            string? id = messageData.GetString("id");
 
             if (id is null or "")
             {
@@ -44,8 +44,8 @@ namespace NeuroSdk.Messages.Incoming
 
             try
             {
-                string? name = messageData.GetValue<string>("name");
-                string? stringifiedData = messageData.GetValue<string>("data");
+                string? name = messageData.GetString("name");
+                string? stringifiedData = messageData.GetString("data");
 
                 if (name is null or "") return ExecutionResult.VedalFailure(NeuroSdkStrings.ActionFailedNoName);
 
